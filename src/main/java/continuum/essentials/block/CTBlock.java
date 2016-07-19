@@ -29,13 +29,13 @@ public class CTBlock extends Block
         if (itemBlock != null)
 			try
 			{
-				item=(itemBlock.getConstructor(new Class<?>[]{Block.class}).newInstance(new Object[]{this}));
+				item = (itemBlock.getConstructor(new Class<?>[]{Block.class}).newInstance(new Object[]{this}));
+				item.setRegistryName(registryName);
 			} catch (Exception e)
 			{
 				System.out.println("Could not register ItemBlock for Block \'" + this.toString() + "\'.");
 				e.printStackTrace();
 			}
-		item.setRegistryName(registryName);
 		ForgeRegistries.ITEMS.register(item);
 	}
 }
