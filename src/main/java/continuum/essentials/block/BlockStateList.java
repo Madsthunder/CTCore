@@ -24,7 +24,7 @@ public class BlockStateList<V extends Comparable<V>>
 		this.property = property;
 		this.delegate = block == null ? null : block.delegate;
 		Collection<V> aValues = this.property.getAllowedValues();
-		for(V value : values)
+		for (V value : values)
 			if(aValues.contains(value))
 				this.values.add(value);
 	}

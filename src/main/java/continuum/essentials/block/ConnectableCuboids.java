@@ -17,11 +17,11 @@ public class ConnectableCuboids
 	{
 		Integer i = 0;
 		this.core = cuboids[i++];
-		for(Integer k = 0; k < 6; k++)
+		for (Integer k = 0; k < 6; k++)
 			this.directionalCuboids.add(cuboids[i++]);
 		this.extraCuboids = Lists.newArrayListWithCapacity(cuboids.length - i);
 		Integer j = i;
-		for(Integer k = 0; k < cuboids.length - i; k++)
+		for (Integer k = 0; k < cuboids.length - i; k++)
 			this.extraCuboids.add(cuboids[j++]);
 	}
 	
@@ -58,13 +58,13 @@ public class ConnectableCuboids
 	{
 		List<ICuboid> cuboids = Lists.newArrayList();
 		cuboids.add(this.getCoreCuboid());
-		for(EnumFacing direction : EnumFacing.values())
+		for (EnumFacing direction : EnumFacing.values())
 		{
 			ICuboid cuboid;
 			if(state.getValue(BlockConnectable.isConnected[direction.ordinal()]) && (cuboid = this.getDirectionalCuboid(direction)) != null && cuboid.isUsable(state))
 				cuboids.add(cuboid);
 		}
-		for(ICuboid cuboid : this.getExtraCuboids())
+		for (ICuboid cuboid : this.getExtraCuboids())
 			if(cuboid.isUsable(state))
 				cuboids.add(cuboid);
 		return cuboids;

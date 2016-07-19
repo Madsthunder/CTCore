@@ -27,19 +27,19 @@ public class Core_OH implements ObjectHolder
 	}
 	
 	@Override
-	public String getModid() 
+	public String getModid()
 	{
 		return this.mod.modid();
 	}
-
+	
 	@Override
-	public String getName() 
+	public String getName()
 	{
 		return this.mod.name();
 	}
-
+	
 	@Override
-	public String getVersion() 
+	public String getVersion()
 	{
 		return this.mod.version();
 	}

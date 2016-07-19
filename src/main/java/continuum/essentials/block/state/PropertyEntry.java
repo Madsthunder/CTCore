@@ -33,12 +33,12 @@ public class PropertyEntry<T extends Comparable<T> & IForgeRegistryEntry<T>> ext
 	}
 	
 	@Override
-    @SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public Optional<T> parseValue(String value)
 	{
-        return Optional.<T>fromNullable(this.stringToClass.get(value));
-    }
-
+		return Optional.<T>fromNullable(this.stringToClass.get(value));
+	}
+	
 	@Override
 	public String getName(T value)
 	{
@@ -52,12 +52,12 @@ public class PropertyEntry<T extends Comparable<T> & IForgeRegistryEntry<T>> ext
 		this.classToString.clear();
 		this.stringToClass.clear();
 		if(values.size() != this.classToString.size() || values.size() != this.stringToClass.size())
-			for(Entry<ResourceLocation, T> entry : registry.getEntries())
+			for (Entry<ResourceLocation, T> entry : registry.getEntries())
 			{
 				ResourceLocation l = entry.getKey();
 				this.stringToClass.put(l.getResourceDomain().toLowerCase() + "_" + l.getResourcePath().toLowerCase(), entry.getValue());
-				this.classToString.put(entry.getValue(), l.getResourceDomain().toLowerCase() + "_" +  l.getResourcePath().toLowerCase());
+				this.classToString.put(entry.getValue(), l.getResourceDomain().toLowerCase() + "_" + l.getResourcePath().toLowerCase());
 			}
 	}
-
+	
 }

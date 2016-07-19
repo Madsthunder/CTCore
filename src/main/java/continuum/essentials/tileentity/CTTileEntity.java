@@ -10,10 +10,11 @@ import net.minecraft.world.World;
 
 /**
  * 
- * @author Madsthunder
- * Convenience class primariy used to send and recieve packets.
- * Uses the variable {@link CTTileEntity#shouldSyncPackets} to detect whether packets should be sent and recieved.
- * BY DEFAULT {@link CTTileEntity#shouldSyncPackets} IS FALSE, DEFINE WHETHER THIS IS TRUE IN YOUR TILEENTITY CONSTRUCTOR.
+ * @author Madsthunder Convenience class primariy used to send and recieve
+ *         packets. Uses the variable {@link CTTileEntity#shouldSyncPackets} to
+ *         detect whether packets should be sent and recieved. BY DEFAULT
+ *         {@link CTTileEntity#shouldSyncPackets} IS FALSE, DEFINE WHETHER THIS
+ *         IS TRUE IN YOUR TILEENTITY CONSTRUCTOR.
  *
  */
 public abstract class CTTileEntity extends TileEntity
@@ -40,7 +41,8 @@ public abstract class CTTileEntity extends TileEntity
 	
 	/**
 	 * 
-	 * @return An {@link NBTTagCompound} that is later merged with another {@link NBTTagCompound} in {@link #writeToNBT(NBTTagCompound)}
+	 * @return An {@link NBTTagCompound} that is later merged with another
+	 *         {@link NBTTagCompound} in {@link #writeToNBT(NBTTagCompound)}
 	 */
 	public abstract NBTTagCompound writeItemsToNBT();
 	
@@ -53,7 +55,9 @@ public abstract class CTTileEntity extends TileEntity
 	
 	/**
 	 * 
-	 * @param compound The {@link NBTTagCompound} from {@link #readFromNBT(NBTTagCompound)}
+	 * @param compound
+	 *            The {@link NBTTagCompound} from
+	 *            {@link #readFromNBT(NBTTagCompound)}
 	 */
 	public abstract void readItemsFromNBT(NBTTagCompound compound);
 	
@@ -72,4 +76,3 @@ public abstract class CTTileEntity extends TileEntity
 			this.readItemsFromNBT(packet.getNbtCompound());
 	}
 }
-

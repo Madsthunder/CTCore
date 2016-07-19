@@ -8,5 +8,6 @@ import net.minecraft.util.math.Vec3d;
 public interface IBlockBoundable
 {
 	public void setBlockBounds(AxisAlignedBB aabb);
+	
 	public RayTraceResult rayTrace(BlockPos pos, Vec3d start, Vec3d finish, AxisAlignedBB boundingBox);
 }

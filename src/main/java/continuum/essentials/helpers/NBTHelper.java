@@ -25,7 +25,7 @@ public class NBTHelper
 	public static <T extends NBTBase> NBTTagList compileList(Class<T> clasz, Iterable<? extends INBTSerializable<T>> nbt)
 	{
 		NBTTagList list = new NBTTagList();
-		for(INBTSerializable<T> object : nbt)
+		for (INBTSerializable<T> object : nbt)
 			list.appendTag(object.serializeNBT());
 		return list;
 	}
@@ -61,7 +61,7 @@ public class NBTHelper
 			{
 				return this.iterator.hasNext();
 			}
-
+			
 			@Override
 			public T next()
 			{

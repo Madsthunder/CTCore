@@ -14,7 +14,7 @@ import net.minecraft.util.EnumFacing.Axis;
 
 public class PropertyAxis extends PropertyEnum<Axis>
 {
-
+	
 	protected PropertyAxis(String name, Collection<Axis> values)
 	{
 		super(name, Axis.class, values);

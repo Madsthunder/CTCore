@@ -54,7 +54,7 @@ public class ClientHelper
 	
 	public static void assignAllModelsToItem(String modid, Integer metaOffset, Item item, String... locations)
 	{
-		for(Integer i = 0; i < locations.length; i++)
+		for (Integer i = 0; i < locations.length; i++)
 			ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
 	}
 	
@@ -91,9 +91,9 @@ public class ClientHelper
 	public static Pair<Integer, Integer> addRotations(Integer x1, Integer y1, Integer x2, Integer y2)
 	{
 		Integer x = x1 + x2, y = y1 + y2;
-		for(; x >= 360;)
+		for (; x >= 360;)
 			x -= 360;
-		for(; y >= 360;)
+		for (; y >= 360;)
 			y -= 360;
 		return Pair.of(x, y);
 	}

@@ -75,11 +75,11 @@ public class CTMod<OH extends ObjectHolder, EH>
 			finally
 			{
 				this.constructed = true;
-				for(;this.remaining > 0; remaining--)
+				for (; this.remaining > 0; remaining--)
 				{
 					bar.step("Don't Read This");
-				System.out.println("step");
-			}
+					System.out.println("step");
+				}
 				ProgressManager.pop(bar);
 			}
 		}
@@ -114,11 +114,11 @@ public class CTMod<OH extends ObjectHolder, EH>
 			finally
 			{
 				this.preInited = true;
-				for(;this.remaining > 0; remaining--)
+				for (; this.remaining > 0; remaining--)
 				{
 					bar.step("Don't Read This");
-				System.out.println("step");
-			}
+					System.out.println("step");
+				}
 				ProgressManager.pop(bar);
 			}
 		}
@@ -152,11 +152,11 @@ public class CTMod<OH extends ObjectHolder, EH>
 			finally
 			{
 				this.inited = true;
-				for(;this.remaining > 0; remaining--)
+				for (; this.remaining > 0; remaining--)
 				{
 					bar.step("Don't Read This");
-				System.out.println("step");
-			}
+					System.out.println("step");
+				}
 				ProgressManager.pop(bar);
 			}
 		}
@@ -190,7 +190,7 @@ public class CTMod<OH extends ObjectHolder, EH>
 			finally
 			{
 				this.postInited = true;
-				for(;this.remaining > 0; remaining--)
+				for (; this.remaining > 0; remaining--)
 				{
 					bar.step("Don't Read This");
 					System.out.println("step");

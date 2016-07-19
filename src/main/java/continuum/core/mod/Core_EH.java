@@ -25,7 +25,7 @@ public class Core_EH
 		if(event.isShowAdvancedItemTooltips())
 		{
 			ArrayList<String> oresList = new ArrayList<String>();
-			for(Integer id : OreDictionary.getOreIDs(event.getItemStack()))
+			for (Integer id : OreDictionary.getOreIDs(event.getItemStack()))
 				oresList.add(OreDictionary.getOreName(id));
 			if(!oresList.isEmpty())
 				event.getToolTip().add("Ore Names:");

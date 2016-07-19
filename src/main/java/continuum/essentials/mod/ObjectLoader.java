@@ -2,7 +2,7 @@ package continuum.essentials.mod;
 
 import net.minecraftforge.fml.relauncher.Side;
 
-public interface ObjectLoader<OH extends ObjectHolder, EH> 
+public interface ObjectLoader<OH extends ObjectHolder, EH>
 {
 	public default void construction(CTMod<OH, EH> mod)
 	{

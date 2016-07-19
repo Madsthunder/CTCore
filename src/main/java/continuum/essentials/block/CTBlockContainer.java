@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public abstract class CTBlockContainer extends BlockContainer
 {
-
+	
 	public CTBlockContainer(Material material, String registryName, Item itemBlock)
 	{
 		this(material, material.getMaterialMapColor(), registryName, itemBlock);
@@ -22,5 +22,5 @@ public abstract class CTBlockContainer extends BlockContainer
 		itemBlock.setRegistryName(registryName);
 		ForgeRegistries.ITEMS.register(itemBlock);
 	}
-
+	
 }

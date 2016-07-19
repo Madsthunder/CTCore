@@ -18,25 +18,9 @@ import net.minecraftforge.common.property.Properties;
 
 public abstract class BlockConnectable extends Block
 {
-	public static final PropertyBool[] isConnected = new PropertyBool[]
-			{
-					PropertyBool.create("down"),
-					PropertyBool.create("up"),
-					PropertyBool.create("north"),
-					PropertyBool.create("south"),
-					PropertyBool.create("west"),
-					PropertyBool.create("east")
-			};
+	public static final PropertyBool[] isConnected = new PropertyBool[] { PropertyBool.create("down"), PropertyBool.create("up"), PropertyBool.create("north"), PropertyBool.create("south"), PropertyBool.create("west"), PropertyBool.create("east") };
 	
-	public static final IUnlistedProperty<Boolean>[] isConectedUnlisted = new IUnlistedProperty[]
-			{
-					Properties.toUnlisted(isConnected[0]),
-					Properties.toUnlisted(isConnected[1]),
-					Properties.toUnlisted(isConnected[2]),
-					Properties.toUnlisted(isConnected[3]),
-					Properties.toUnlisted(isConnected[4]),
-					Properties.toUnlisted(isConnected[5])
-			};
+	public static final IUnlistedProperty<Boolean>[] isConectedUnlisted = new IUnlistedProperty[] { Properties.toUnlisted(isConnected[0]), Properties.toUnlisted(isConnected[1]), Properties.toUnlisted(isConnected[2]), Properties.toUnlisted(isConnected[3]), Properties.toUnlisted(isConnected[4]), Properties.toUnlisted(isConnected[5]) };
 	
 	private final Predicate<Pair<IBlockAccess, BlockPos>> predicate;
 	
@@ -49,7 +33,7 @@ public abstract class BlockConnectable extends Block
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess access, BlockPos pos)
 	{
-		for(EnumFacing direction : EnumFacing.values())
+		for (EnumFacing direction : EnumFacing.values())
 			state = state.withProperty(isConnected[direction.ordinal()], this.isConnectedTo(access, pos, direction));
 		return state;
 	}

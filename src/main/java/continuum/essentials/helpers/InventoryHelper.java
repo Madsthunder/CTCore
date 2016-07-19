@@ -7,6 +7,12 @@ public class InventoryHelper
 {
 	public static Container createDummyContainer()
 	{
-		return new Container() { public boolean canInteractWith(EntityPlayer player) { return true; } };
+		return new Container()
+		{
+			public boolean canInteractWith(EntityPlayer player)
+			{
+				return true;
+			}
+		};
 	}
 }

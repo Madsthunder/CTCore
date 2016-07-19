@@ -51,44 +51,44 @@ public class CTTileEntityContainer extends CTTileEntity implements IInventory, I
 		compound.setTag("Items", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(this.getWrapper(), null));
 		return compound;
 	}
-
+	
 	@Override
 	public void readItemsFromNBT(NBTTagCompound compound)
 	{
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(this.getWrapper(), null, compound.getTagList("Items", 10));
 		this.modified = false;
 	}
-
+	
 	@Override
 	public String getName()
 	{
 		return this.hasCustomName() ? this.customName : "container.crafting_grid";
 	}
-
+	
 	@Override
 	public boolean hasCustomName()
 	{
 		return this.customName != null && !this.customName.isEmpty();
 	}
-
+	
 	@Override
 	public ITextComponent getDisplayName()
 	{
 		return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
 	}
-
+	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player)
 	{
 		return null;
 	}
-
+	
 	@Override
 	public String getGuiID()
 	{
 		return "moarwoods:crafting_grid";
 	}
-
+	
 	@Override
 	public int getSizeInventory()
 	{
@@ -100,7 +100,7 @@ public class CTTileEntityContainer extends CTTileEntity implements IInventory, I
 	{
 		return this.stacks[index];
 	}
-
+	
 	@Override
 	public ItemStack decrStackSize(int index, int count)
 	{
@@ -130,43 +130,45 @@ public class CTTileEntityContainer extends CTTileEntity implements IInventory, I
 	@Override
 	public void handleUpdateTag(NBTTagCompound compound)
 	{
-		super.handleUpdateTag(compound);;
+		super.handleUpdateTag(compound);
+		;
 	}
+	
 	@Override
 	public ItemStack removeStackFromSlot(int index)
 	{
 		this.modified = true;
 		return ItemStackHelper.getAndRemove(this.stacks, index);
 	}
-
+	
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
-        this.stacks[index] = stack;
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
-            stack.stackSize = this.getInventoryStackLimit();
+		this.stacks[index] = stack;
+		if(stack != null && stack.stackSize > this.getInventoryStackLimit())
+			stack.stackSize = this.getInventoryStackLimit();
 		this.modified = true;
-        this.markDirty();
-    }
-
+		this.markDirty();
+	}
+	
 	@Override
 	public int getInventoryStackLimit()
 	{
 		return this.stackSizeLimit;
 	}
-
+	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player)
 	{
 		return this.hasOwner() ? this.getOwner().equals(player.getUniqueID()) : true;
 	}
-
+	
 	@Override
 	public void openInventory(EntityPlayer player)
 	{
 		
 	}
-
+	
 	@Override
 	public void closeInventory(EntityPlayer player)
 	{
@@ -182,10 +184,9 @@ public class CTTileEntityContainer extends CTTileEntity implements IInventory, I
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 	{
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return (T) this.getWrapper();
+			return (T)this.getWrapper();
 		return super.getCapability(capability, facing);
 	}
-	
 	
 	@Override
 	public boolean hasCapability(Capability capability, EnumFacing facing)
@@ -198,29 +199,29 @@ public class CTTileEntityContainer extends CTTileEntity implements IInventory, I
 	{
 		return true;
 	}
-
+	
 	@Override
 	public int getField(int id)
 	{
 		return 0;
 	}
-
+	
 	@Override
 	public void setField(int id, int value)
 	{
 		
 	}
-
+	
 	@Override
 	public int getFieldCount()
 	{
 		return 0;
 	}
-
+	
 	@Override
 	public void clear()
 	{
-		for(Integer index = 0; index < this.getSizeInventory(); index++)
+		for (Integer index = 0; index < this.getSizeInventory(); index++)
 			this.setInventorySlotContents(index, null);
 	}
 	

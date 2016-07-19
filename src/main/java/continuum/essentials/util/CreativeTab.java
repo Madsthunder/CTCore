@@ -13,7 +13,7 @@ public class CreativeTab extends CreativeTabs
 {
 	private RegistryDelegate delegate;
 	private ItemStack override;
-
+	
 	public CreativeTab(String name, IForgeRegistryEntry.Impl impl)
 	{
 		super(name);
@@ -33,14 +33,14 @@ public class CreativeTab extends CreativeTabs
 	}
 	
 	@Override
-    @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack()
-    {
-        if (this.override == null)
-        {
-            this.override = new ItemStack(this.getTabIconItem(), 1, this.getIconItemDamage());
-        }
-
-        return this.override;
-    }
+	@SideOnly(Side.CLIENT)
+	public ItemStack getIconItemStack()
+	{
+		if(this.override == null)
+		{
+			this.override = new ItemStack(this.getTabIconItem(), 1, this.getIconItemDamage());
+		}
+		
+		return this.override;
+	}
 }

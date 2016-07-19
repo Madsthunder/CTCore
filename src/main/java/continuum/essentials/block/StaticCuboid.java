@@ -43,20 +43,20 @@ public class StaticCuboid implements ICuboid
 	{
 		return this.selectable;
 	}
-
+	
 	@Override
 	public AxisAlignedBB getShowableCuboid()
 	{
 		return this.showable;
 	}
-
+	
 	@Override
 	public ICuboid addExtraData(Object obj)
 	{
 		this.extdata = obj;
 		return this;
 	}
-
+	
 	@Override
 	public Object getExtraData()
 	{

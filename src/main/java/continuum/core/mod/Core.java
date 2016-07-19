@@ -13,11 +13,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class Core extends CTMod<Core_OH, Core_EH>
 {
 	
-	public Core() 
+	public Core()
 	{
 		super(Core_OH.getHolder(Core.class), new Core_EH(), ClientLoader.I);
 	}
-
+	
 	@Mod.EventHandler
 	public void construction(FMLConstructionEvent event)
 	{
@@ -29,13 +29,13 @@ public class Core extends CTMod<Core_OH, Core_EH>
 	{
 		super.pre(event);
 	}
-
+	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		super.init(event);
 	}
-
+	
 	@Mod.EventHandler
 	public void post(FMLPostInitializationEvent event)
 	{

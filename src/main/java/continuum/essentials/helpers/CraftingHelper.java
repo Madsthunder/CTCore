@@ -31,10 +31,10 @@ public class CraftingHelper
 		List<IRecipe> recipes = getCraftingManager().getRecipeList();
 		List<IRecipe> markedForRemoval = Lists.newArrayList();
 		ItemStack stack1;
-		for(IRecipe recipe : recipes)
+		for (IRecipe recipe : recipes)
 			if((stack1 = recipe.getRecipeOutput()) != null && stack.isItemEqual(stack) && stack1.stackSize == stack.stackSize)
 				markedForRemoval.add(recipe);
-		for(IRecipe recipe : markedForRemoval)
+		for (IRecipe recipe : markedForRemoval)
 			recipes.remove(recipe);
 	}
 }

@@ -21,11 +21,11 @@ public class BlockHelper
 	
 	public static void restoreBlockSnapshots(World world, List<BlockSnapshot> snapshots)
 	{
-		for(BlockSnapshot snapshot : snapshots)
+		for (BlockSnapshot snapshot : snapshots)
 		{
-            world.restoringBlockSnapshots = true;
-            snapshot.restore(true, false);
-            world.restoringBlockSnapshots = false;
+			world.restoringBlockSnapshots = true;
+			snapshot.restore(true, false);
+			world.restoringBlockSnapshots = false;
 		}
 	}
 }

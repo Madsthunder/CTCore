@@ -18,7 +18,7 @@ public class CTModelLoader implements ICustomModelLoader
 	{
 		this.manager = manager;
 	}
-
+	
 	@Override
 	public boolean accepts(ResourceLocation location)
 	{
@@ -26,12 +26,12 @@ public class CTModelLoader implements ICustomModelLoader
 			return true;
 		return false;
 	}
-
+	
 	@Override
 	public IModel loadModel(ResourceLocation location)
 	{
 		this.currentLocation = location;
 		return Core_OH.models.get(location);
 	}
-
+	
 }

@@ -7,7 +7,7 @@ public class Slope2D
 {
 	protected final Fraction slope;
 	protected final Fraction yIntercept;
-
+	
 	public Slope2D(Number slope, Number yIntercept)
 	{
 		this(Fraction.getFraction(slope.toString()), Fraction.getFraction(yIntercept.toString()));
@@ -39,9 +39,11 @@ public class Slope2D
 		return (this.slope.multiplyBy(x)).add(this.yIntercept);
 	}
 	
-	/**If there are infinite solutions, the first value will be false and the second and third values will be null.
-	 * If there are no solutions, then the method will return null.
-	 * If there is one solution, the first value will be true, the second x and the third y.
+	/**
+	 * If there are infinite solutions, the first value will be false and the
+	 * second and third values will be null. If there are no solutions, then the
+	 * method will return null. If there is one solution, the first value will
+	 * be true, the second x and the third y.
 	 */
 	public Triple<Boolean, Fraction, Fraction> getIntercept(Slope2D other)
 	{

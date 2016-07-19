@@ -32,9 +32,9 @@ public abstract class BlockConnectableBounds extends BlockConnectable implements
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB box, List list, Entity entity)
 	{
 		AxisAlignedBB aabb;
-		for(ICuboid cuboid : this.cuboids.getCuboidsFromState(state.getActualState(world, pos)))
+		for (ICuboid cuboid : this.cuboids.getCuboidsFromState(state.getActualState(world, pos)))
 			if(box.intersectsWith((aabb = cuboid.getSelectableCuboid().offset(pos))))
-					list.add(aabb);
+				list.add(aabb);
 	}
 	
 	@Override
