@@ -7,6 +7,7 @@ import continuum.core.mod.Core_EH;
 import continuum.core.mod.Core_OH;
 import continuum.essentials.mod.CTMod;
 import continuum.essentials.mod.ObjectLoader;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -27,6 +28,14 @@ public class ClientLoader implements ObjectLoader<Core_OH, Core_EH>
 	public void construction(CTMod<Core_OH, Core_EH> mod)
 	{
 		ModelLoaderRegistry.registerLoader(new CTModelLoader());
+		try
+		{
+			Launch.classLoader.loadClass("continuum.essentials.events.DebugInfoEvent");
+		}
+		catch(ClassNotFoundException exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 	
 	@Override
