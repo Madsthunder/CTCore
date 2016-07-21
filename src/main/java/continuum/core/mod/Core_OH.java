@@ -9,19 +9,20 @@ import continuum.essentials.mod.ObjectHolder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 
 public class Core_OH implements ObjectHolder
 {
 	private static Core_OH holder;
 	
-	static Core_OH getHolder(Class<Core> clasz)
+	static Core_OH getHolder(ModContainer mod)
 	{
-		return holder == null ? new Core_OH(clasz.getAnnotation(Mod.class)) : holder;
+		return holder == null ? new Core_OH(mod) : holder;
 	}
 	
-	private final Mod mod;
+	private final ModContainer mod;
 	
-	private Core_OH(Mod mod)
+	private Core_OH(ModContainer mod)
 	{
 		this.mod = mod;
 	}
@@ -29,19 +30,19 @@ public class Core_OH implements ObjectHolder
 	@Override
 	public String getModid()
 	{
-		return this.mod.modid();
+		return this.mod.getModId();
 	}
 	
 	@Override
 	public String getName()
 	{
-		return this.mod.name();
+		return this.mod.getName();
 	}
 	
 	@Override
 	public String getVersion()
 	{
-		return this.mod.version();
+		return this.mod.getVersion();
 	}
 	
 	public static final HashMap<ResourceLocation, IModel> models = Maps.newHashMap();

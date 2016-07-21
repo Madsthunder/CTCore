@@ -1,4 +1,4 @@
-package continuum.core.loaders;
+package continuum.core.plugins;
 
 import java.io.File;
 import java.util.List;
@@ -24,7 +24,7 @@ public class PluginLoader implements IFMLLoadingPlugin
 	@Override
 	public String getModContainerClass()
 	{
-		return null;
+		return "continuum.core.mod.CTCore_Mod";
 	}
 
 	@Override

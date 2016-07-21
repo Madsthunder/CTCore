@@ -24,24 +24,20 @@ public class DebugEventTransformer implements IClassTransformer
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] baseClass)
 	{
-		ClassNode node;
-		ClassReader reader;
+		final ClassNode node = new ClassNode();
+		final ClassReader reader = new ClassReader(baseClass);
 		if("continuum.essentials.events.DebugInfoEvent".equals(name))
 		{
-			node = new ClassNode();
-			reader = new ClassReader(baseClass);
 			reader.accept(node, 0);
 			for(MethodNode method : node.methods)
 				if("modifyLeft".equals(method.name))
-					leftMethod = method;
+					this.leftMethod = method;
 				else if("modifyRight".equals(method.name))
-					rightMethod = method;
+					this.rightMethod = method;
 		}
 		
 		else if("net.minecraft.client.gui.GuiOverlayDebug".equals(name))
 		{
-			node = new ClassNode();
-			reader = new ClassReader(baseClass);
 			reader.accept(node, 0);
 			MethodNode debugInfoLeft = null;
 			MethodNode debugInfoRight = null;
@@ -56,63 +52,50 @@ public class DebugEventTransformer implements IClassTransformer
 						FMLLog.warning("GuiOverlayDebug has more than 2 methods with a return type %s?", STRING_LIST_METHOD.substring(2));
 						return baseClass;
 					}
-			ListIterator<AbstractInsnNode> iterator;
-			if(debugInfoLeft != null)
+			if(!insertDebugEvent(debugInfoLeft, this.leftMethod, 5))
 			{
-				for(iterator = debugInfoLeft.instructions.iterator(); iterator.hasNext();)
-				{
-					AbstractInsnNode instruction = iterator.next();
-					if(instruction instanceof InsnNode && instruction.getOpcode() == Opcodes.ARETURN)
-					{
-						if(iterator.next() instanceof org.objectweb.asm.tree.LabelNode)
-							if(!iterator.hasNext())
-							{
-								iterator.previous();
-								iterator.previous();
-								iterator.previous();
-								iterator.add(new VarInsnNode(Opcodes.ALOAD, 5));
-								iterator.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "continuum/essentials/events/DebugInfoEvent", this.leftMethod.name, this.leftMethod.desc, false));
-								iterator.next();
-								iterator.next();
-							}
-							else
-								iterator.previous();
-					}
-				}
+				FMLLog.bigWarning("Method call()/modifyLeft() doesent exist?! Not transforming GuiOverlayDebug.");
+				return baseClass;
 			}
-			if(debugInfoRight != null)
+			if(!insertDebugEvent(debugInfoRight, this.rightMethod, 9))
 			{
-				for(iterator = debugInfoRight.instructions.iterator(); iterator.hasNext();)
-				{
-					AbstractInsnNode instruction = iterator.next();
-					System.out.println(instruction);
-					if(instruction instanceof VarInsnNode)
-					{
-						VarInsnNode var = (VarInsnNode)instruction;
-						System.out.println("Index: " + var.var);
-					}
-					if(instruction instanceof InsnNode && instruction.getOpcode() == Opcodes.ARETURN)
-					{
-						if(iterator.next() instanceof org.objectweb.asm.tree.LabelNode)
-							if(!iterator.hasNext())
-							{
-								iterator.previous();
-								iterator.previous();
-								iterator.previous();
-								iterator.add(new VarInsnNode(Opcodes.ALOAD, 9));
-								iterator.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "continuum/essentials/events/DebugInfoEvent", this.rightMethod.name, this.rightMethod.desc, false));
-								iterator.next();
-								iterator.next();
-							}
-							else
-								iterator.previous();
-					}
-				}
+				FMLLog.bigWarning("Method debugInfoRight()/modifyRight() doesent exist?! Not transforming GuiOverlayDebug.");
+				return baseClass;
 			}
 	        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 	        node.accept(writer);
 	        return writer.toByteArray();
 		}
 		return baseClass;
+	}
+	
+	private static boolean insertDebugEvent(MethodNode node, MethodNode eventMethod, Integer variable)
+	{
+		if(node != null && eventMethod != null)
+		{
+			ListIterator<AbstractInsnNode> iterator = node.instructions.iterator();
+			while(iterator.hasNext())
+			{
+				AbstractInsnNode instruction = iterator.next();
+				if(instruction instanceof InsnNode && instruction.getOpcode() == Opcodes.ARETURN)
+				{
+					if(iterator.next() instanceof org.objectweb.asm.tree.LabelNode)
+						if(!iterator.hasNext())
+						{
+							iterator.previous();
+							iterator.previous();
+							iterator.previous();
+							iterator.add(new VarInsnNode(Opcodes.ALOAD, variable));
+							iterator.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "continuum/essentials/events/DebugInfoEvent", eventMethod.name, eventMethod.desc, false));
+							iterator.next();
+							iterator.next();
+						}
+						else
+							iterator.previous();
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 }
