@@ -27,6 +27,11 @@ public class Core_OH implements ObjectHolder
 		this.mod = mod;
 	}
 	
+	public ModContainer getMod()
+	{
+		return this.mod;
+	}
+	
 	@Override
 	public String getModid()
 	{
