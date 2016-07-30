@@ -11,24 +11,24 @@ import net.minecraft.world.World;
 /**
  * 
  * @author Madsthunder Convenience class primariy used to send and recieve
- *         packets. Uses the variable {@link CTTileEntity#shouldSyncPackets} to
+ *         packets. Uses the variable {@link TileEntitySyncable#shouldSyncTags} to
  *         detect whether packets should be sent and recieved. BY DEFAULT
- *         {@link CTTileEntity#shouldSyncPackets} IS FALSE, DEFINE WHETHER THIS
+ *         {@link TileEntitySyncable#shouldSyncTags} IS FALSE, DEFINE WHETHER THIS
  *         IS TRUE IN YOUR TILEENTITY CONSTRUCTOR.
  *
  */
-public abstract class CTTileEntity extends TileEntity
+public abstract class TileEntitySyncable extends TileEntity
 {
-	public final Boolean shouldSyncPackets;
+	public final Boolean shouldSyncTags;
 	
-	public CTTileEntity()
+	public TileEntitySyncable()
 	{
 		this(false);
 	}
 	
-	public CTTileEntity(Boolean packets)
+	public TileEntitySyncable(Boolean packets)
 	{
-		this.shouldSyncPackets = packets;
+		this.shouldSyncTags = packets;
 	}
 	
 	@Override
@@ -62,17 +62,19 @@ public abstract class CTTileEntity extends TileEntity
 	public abstract void readItemsFromNBT(NBTTagCompound compound);
 	
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
+	public NBTTagCompound getUpdateTag()
 	{
-		if(this.shouldSyncPackets)
-			return new SPacketUpdateTileEntity(this.pos, 0, this.writeItemsToNBT());
-		return null;
+		NBTTagCompound compound = super.getUpdateTag();
+		if(this.shouldSyncTags) compound.setTag("ItemsNBT", this.writeItemsToNBT());
+		return compound;
 	}
 	
 	@Override
-	public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
+	public void handleUpdateTag(NBTTagCompound compound)
 	{
-		if(this.shouldSyncPackets)
-			this.readItemsFromNBT(packet.getNbtCompound());
+		NBTTagCompound items = compound.getCompoundTag("ItemsNBT");
+		compound.removeTag("ItemsNBT");
+		super.handleUpdateTag(compound);
+		this.readItemsFromNBT(compound);
 	}
 }

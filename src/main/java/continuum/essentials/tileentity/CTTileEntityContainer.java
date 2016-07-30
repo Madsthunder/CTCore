@@ -24,7 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class CTTileEntityContainer extends CTTileEntity implements IInventory, IInteractionObject
+public class CTTileEntityContainer extends TileEntitySyncable implements IInventory, IInteractionObject
 {
 	private String customName;
 	private final ItemStack[] stacks;
