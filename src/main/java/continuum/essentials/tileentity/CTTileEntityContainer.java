@@ -2,7 +2,7 @@ package continuum.essentials.tileentity;
 
 import java.util.UUID;
 
-import continuum.essentials.helpers.NBTHelper;
+import continuum.essentials.hooks.NBTHooks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
