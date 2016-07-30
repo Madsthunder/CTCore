@@ -24,7 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class CTTileEntityContainer extends TileEntitySyncable implements IInventory, IInteractionObject
+public class TileEntityInventory extends TileEntitySyncable implements IInventory, IInteractionObject
 {
 	private String customName;
 	private final ItemStack[] stacks;
@@ -33,12 +33,12 @@ public class CTTileEntityContainer extends TileEntitySyncable implements IInvent
 	private Boolean modified = false;
 	private InvWrapper wrapper;
 	
-	public CTTileEntityContainer(Integer inventorySize)
+	public TileEntityInventory(Integer inventorySize)
 	{
 		this(inventorySize, 64);
 	}
 	
-	public CTTileEntityContainer(Integer inventorySize, Integer stackSizeLimit)
+	public TileEntityInventory(Integer inventorySize, Integer stackSizeLimit)
 	{
 		this.stacks = new ItemStack[inventorySize];
 		this.stackSizeLimit = stackSizeLimit;
