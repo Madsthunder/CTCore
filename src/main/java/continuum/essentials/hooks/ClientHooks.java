@@ -3,14 +3,16 @@ package continuum.essentials.hooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ClientHooks
 {
 	public static ResourceLocation fromMC(String location)
@@ -71,6 +73,11 @@ public class ClientHooks
 	{
 		for (Integer i : ObjectHooks.increment(locations.length))
 			ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
+	}
+	
+	public static Boolean isFancyEnabled()
+	{
+		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
 	}
 	
 	public static Pair<Integer, Integer> getRotations(ModelRotation rotation)
