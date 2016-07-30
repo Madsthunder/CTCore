@@ -3,6 +3,7 @@ package continuum.essentials.helpers;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ModelRotation;
 import net.minecraft.item.Item;
@@ -17,14 +18,28 @@ public class ClientHelper
 		return new ResourceLocation("minecraft", location);
 	}
 	
+	public static void assignAllItemsToVariant(String variant, Block... blocks)
+	{
+		assignAllItemsToVariant(variant, 0, blocks);
+	}
+	
+	public static void assignAllItemsToVariant(String variant, Integer meta, Block... blocks)
+	{
+		Item item;
+		ResourceLocation name;
+		for(Block block : blocks)
+			if((item = Item.getItemFromBlock(block)) != null && (name = item.getRegistryName()) != null)
+				ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(name, variant));
+	}
+	
 	public static void assignAllModelsToItem(Block block, String... locations)
 	{
-		assignAllModelsToItem(Loader.instance().activeModContainer().getModId().toLowerCase(), Item.getItemFromBlock(block), locations);
+		assignAllModelsToItem(ModHooks.getCurrentModid(), Item.getItemFromBlock(block), locations);
 	}
 	
 	public static void assignAllModelsToItem(Item item, String... locations)
 	{
-		assignAllModelsToItem(Loader.instance().activeModContainer().getModId().toLowerCase(), item, locations);
+		assignAllModelsToItem(ModHooks.getCurrentModid(), item, locations);
 	}
 	
 	public static void assignAllModelsToItem(String modid, Block block, String... locations)
@@ -39,12 +54,12 @@ public class ClientHelper
 	
 	public static void assignAllModelsToItem(Integer metaOffset, Block block, String... locations)
 	{
-		assignAllModelsToItem(Loader.instance().activeModContainer().getModId().toLowerCase(), metaOffset, Item.getItemFromBlock(block), locations);
+		assignAllModelsToItem(ModHooks.getCurrentModid(), metaOffset, Item.getItemFromBlock(block), locations);
 	}
 	
 	public static void assignAllModelsToItem(Integer metaOffset, Item item, String... locations)
 	{
-		assignAllModelsToItem(Loader.instance().activeModContainer().getModId().toLowerCase(), metaOffset, item, locations);
+		assignAllModelsToItem(ModHooks.getCurrentModid(), metaOffset, item, locations);
 	}
 	
 	public static void assignAllModelsToItem(String modid, Integer metaOffset, Block block, String... locations)
@@ -54,7 +69,7 @@ public class ClientHelper
 	
 	public static void assignAllModelsToItem(String modid, Integer metaOffset, Item item, String... locations)
 	{
-		for (Integer i = 0; i < locations.length; i++)
+		for (Integer i : ObjectHelper.increment(locations.length))
 			ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
 	}
 	
