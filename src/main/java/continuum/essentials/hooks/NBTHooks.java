@@ -1,4 +1,4 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import java.util.Iterator;
 
@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class NBTHelper
+public class NBTHooks
 {
 	public static <T extends NBTBase> Iterable<T> increment(Class<T> clasz, NBTTagList list)
 	{
@@ -53,7 +53,7 @@ public class NBTHelper
 			private Iter(NBTTagList list)
 			{
 				this.list = list;
-				this.iterator = ObjectHelper.increment(list.tagCount()).iterator();
+				this.iterator = ObjectHooks.increment(list.tagCount()).iterator();
 			}
 			
 			@Override

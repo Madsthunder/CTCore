@@ -1,8 +1,8 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import java.util.Iterator;
 
-public class ObjectHelper
+public class ObjectHooks
 {
 	public static Iterable<Integer> increment(Integer end)
 	{

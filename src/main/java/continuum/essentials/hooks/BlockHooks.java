@@ -1,4 +1,4 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
 
-public class BlockHelper
+public class BlockHooks
 {
 	public static List<BlockSnapshot> setBlockStateWithSnapshots(World world, BlockPos pos, IBlockState state)
 	{

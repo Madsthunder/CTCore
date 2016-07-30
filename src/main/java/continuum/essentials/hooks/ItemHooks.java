@@ -1,4 +1,4 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;

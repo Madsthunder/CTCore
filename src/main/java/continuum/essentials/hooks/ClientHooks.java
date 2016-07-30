@@ -1,4 +1,4 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Loader;
 
-public class ClientHelper
+public class ClientHooks
 {
 	public static ResourceLocation fromMC(String location)
 	{
@@ -69,7 +69,7 @@ public class ClientHelper
 	
 	public static void assignAllModelsToItem(String modid, Integer metaOffset, Item item, String... locations)
 	{
-		for (Integer i : ObjectHelper.increment(locations.length))
+		for (Integer i : ObjectHooks.increment(locations.length))
 			ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
 	}
 	

@@ -1,4 +1,4 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;

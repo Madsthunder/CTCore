@@ -1,9 +1,9 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 
-public class InventoryHelper
+public class InventoryHooks
 {
 	public static Container createDummyContainer()
 	{

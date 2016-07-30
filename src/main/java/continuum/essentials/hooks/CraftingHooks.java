@@ -1,4 +1,4 @@
-package continuum.essentials.helpers;
+package continuum.essentials.hooks;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 
-public class CraftingHelper
+public class CraftingHooks
 {
 	public static InventoryCrafting createDummyCraftingTable()
 	{
@@ -18,7 +18,7 @@ public class CraftingHelper
 	
 	public static InventoryCrafting createDummyCraftingTable(Integer width, Integer height)
 	{
-		return new InventoryCrafting(InventoryHelper.createDummyContainer(), width, height);
+		return new InventoryCrafting(InventoryHooks.createDummyContainer(), width, height);
 	}
 	
 	public static CraftingManager getCraftingManager()
