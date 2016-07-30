@@ -21,28 +21,10 @@ public class CTCore_Mod extends DummyModContainer
 	{
 		super(new ModMetadata());
 		ModMetadata metadata = this.getMetadata();
-		metadata.modId = this.getModId();
-		metadata.name = this.getName();
-		metadata.version = this.getVersion();
+		metadata.modId = "ctcore";
+		metadata.name = "Continuum: Core";
+		metadata.version = "2.4.0";
 	}
-	
-	@Override
-	public String getModId()
-	{
-		return "CTCore";
-	}
-
-	@Override
-	public String getName()
-	{
-		return "Continuum: Core";
-	}
-
-    @Override
-    public String getVersion()
-    {
-        return "2.4.0";
-    }
     
     @Override
     public boolean registerBus(EventBus bus, LoadController controller)
