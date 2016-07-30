@@ -37,7 +37,7 @@ public class CuboidSelector
 				cuboid = cc;
 			}
 			else if(rc != null)
-				if(start.distanceTo(rc.hitVec) < start.distanceTo(rc.hitVec))
+				if(start.distanceTo(rc.hitVec) < start.distanceTo(result.hitVec))
 				{
 					result = rc;
 					cuboid = cc;
