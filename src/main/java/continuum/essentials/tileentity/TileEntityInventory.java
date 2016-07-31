@@ -105,39 +105,22 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	public ItemStack decrStackSize(int index, int count)
 	{
 		ItemStack stack = ItemStackHelper.getAndSplit(this.stacks, index, count);
-		if(stack != null)
-		{
-			this.modified = true;
-			this.markDirty();
-		}
+		this.markDirty();
 		return stack;
 	}
 	
-	@Override
+	/**@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
 	{
 		if(this.modified)
 			return !(this.modified = false);
 		return super.shouldRefresh(world, pos, oldState, newState);
-	}
-	
-	@Override
-	public NBTTagCompound getUpdateTag()
-	{
-		return super.getUpdateTag();
-	}
-	
-	@Override
-	public void handleUpdateTag(NBTTagCompound compound)
-	{
-		super.handleUpdateTag(compound);
-		;
-	}
+	}*/
 	
 	@Override
 	public ItemStack removeStackFromSlot(int index)
 	{
-		this.modified = true;
+		this.markDirty();
 		return ItemStackHelper.getAndRemove(this.stacks, index);
 	}
 	
@@ -147,7 +130,6 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 		this.stacks[index] = stack;
 		if(stack != null && stack.stackSize > this.getInventoryStackLimit())
 			stack.stackSize = this.getInventoryStackLimit();
-		this.modified = true;
 		this.markDirty();
 	}
 	
@@ -209,7 +191,7 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	@Override
 	public void setField(int id, int value)
 	{
-		
+		this.markDirty();
 	}
 	
 	@Override
