@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ModelRotation;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -78,6 +80,16 @@ public class ClientHooks
 	public static Boolean isFancyEnabled()
 	{
 		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
+	}
+	
+	public static void registerColorMultiplier(IBlockColor multiplier, Block... blocks)
+	{
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(multiplier, blocks);
+	}
+	
+	public static void registerColorMultiplier(IItemColor multiplier, Item... items)
+	{
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(multiplier, items);
 	}
 	
 	public static Pair<Integer, Integer> getRotations(ModelRotation rotation)
