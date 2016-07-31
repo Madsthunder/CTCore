@@ -2,7 +2,9 @@ package continuum.essentials.hooks;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
@@ -27,5 +29,13 @@ public class BlockHooks
 			snapshot.restore(true, false);
 			world.restoringBlockSnapshots = false;
 		}
+	}
+	
+	public static Block[] allItemsToBlocks(Item... items)
+	{
+		Block[] blocks = new Block[items.length];
+		for(Integer i : ObjectHooks.increment(items.length))
+			blocks[i] = Block.getBlockFromItem(items[i]);
+		return blocks;
 	}
 }

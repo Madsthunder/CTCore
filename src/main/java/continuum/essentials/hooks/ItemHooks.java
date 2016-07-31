@@ -1,6 +1,7 @@
 package continuum.essentials.hooks;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -20,6 +21,14 @@ public class ItemHooks
 	{
 		ForgeRegistries.ITEMS.register(item.setRegistryName(block.getRegistryName()));
 		return item;
+	}
+	
+	public static Item[] allItemsToBlocks(Block... blocks)
+	{
+		Item[] items = new Item[blocks.length];
+		for(Integer i : ObjectHooks.increment(blocks.length))
+			items[i] = Item.getItemFromBlock(blocks[i]);
+		return items;
 	}
 	
 	private static class ItemBlockMeta extends ItemBlock
