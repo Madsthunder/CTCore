@@ -14,6 +14,22 @@ public class ObjectHooks
 		return new IntegerIncrement(start, end);
 	}
 	
+	public static Boolean anyNull(Object... objects)
+	{
+		for(Object obj : objects)
+			if(obj == null)
+				return true;
+		return false;
+	}
+	
+	public static Boolean anyNull(Iterable<Object> objects)
+	{
+		for(Object obj : objects)
+			if(obj == null)
+				return true;
+		return false;
+	}
+	
 	private static class IntegerIncrement implements Iterable<Integer>
 	{
 		private final Iter iterator;
