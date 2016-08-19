@@ -2,6 +2,8 @@ package continuum.essentials.hooks;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -41,15 +43,15 @@ public class BlockHooks
 		return blocks;
 	}
 	
-	public static EnumFacing[] getFacingsFromAxis(Axis axis)
+	public static EnumFacing[] getDirectonsFromAxis(Axis axis)
 	{
 		if(axis == null)
 			return new EnumFacing[0];
-		EnumFacing[] facings = new EnumFacing[2];
+		List<EnumFacing> directions = Lists.newArrayList();
 		int i = 0;
 		for(EnumFacing facing : EnumFacing.values())
 			if(facing.getAxis() == axis)
-				facings[i++] = facing;
-		return facings;
+				directions.add(facing);
+		return directions.toArray(new EnumFacing[0]);
 	}
 }
