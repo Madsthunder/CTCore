@@ -1,2 +1,2 @@
 # Core
-Hub for all essentials required for (almost) all Continuum Mods
+Contains most to essentials for most Continuum Mods. Feel free to develop with this or use it in your own code.
