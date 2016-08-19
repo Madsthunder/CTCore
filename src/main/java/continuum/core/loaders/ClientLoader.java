@@ -2,7 +2,7 @@ package continuum.core.loaders;
 
 import java.util.HashMap;
 
-import continuum.core.client.CTModelLoader;
+import continuum.core.client.ModelDirectory;
 import continuum.core.mod.Core_EH;
 import continuum.core.mod.Core_OH;
 import continuum.essentials.mod.CTMod;
@@ -27,7 +27,7 @@ public class ClientLoader implements ObjectLoader<Core_OH, Core_EH>
 	@Override
 	public void construction(CTMod<Core_OH, Core_EH> mod)
 	{
-		ModelLoaderRegistry.registerLoader(new CTModelLoader());
+		ModelLoaderRegistry.registerLoader(new ModelDirectory());
 		try
 		{
 			Launch.classLoader.loadClass("continuum.essentials.events.DebugInfoEvent");
