@@ -8,9 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 
-public class CTModelLoader implements ICustomModelLoader
+public class ModelDirectory implements ICustomModelLoader
 {
-	private static ResourceLocation currentLocation;
 	private IResourceManager manager;
 	
 	@Override
@@ -22,15 +21,12 @@ public class CTModelLoader implements ICustomModelLoader
 	@Override
 	public boolean accepts(ResourceLocation location)
 	{
-		if(Core_OH.models.containsKey(location))
-			return true;
-		return false;
+		return Core_OH.models.containsKey(location);
 	}
 	
 	@Override
 	public IModel loadModel(ResourceLocation location)
 	{
-		this.currentLocation = location;
 		return Core_OH.models.get(location);
 	}
 	
