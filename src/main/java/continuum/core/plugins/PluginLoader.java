@@ -1,13 +1,8 @@
 package continuum.core.plugins;
 
-import java.io.File;
-import java.util.List;
 import java.util.Map;
 
-import continuum.essentials.events.DebugInfoEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.launchwrapper.ITweaker;
-import net.minecraft.launchwrapper.LaunchClassLoader;
+import net.minecraftforge.fml.relauncher.IFMLCallHook;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name("Continuum: Core")
@@ -34,13 +29,14 @@ public class PluginLoader implements IFMLLoadingPlugin
 	}
 
 	@Override
-	public void injectData(Map<String, Object> data)
-	{
-	}
-
-	@Override
 	public String getAccessTransformerClass()
 	{
 		return null;
+	}
+
+	@Override
+	public void injectData(Map<String, Object> data)
+	{
+		
 	}
 }
