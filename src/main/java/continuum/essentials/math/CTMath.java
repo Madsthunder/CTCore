@@ -28,7 +28,7 @@ public class CTMath
 	
 	public static class IndefiniteSlope extends Slope2D
 	{
-		public IndefiniteSlope(Fraction x)
+		private IndefiniteSlope(Fraction x)
 		{
 			super(x, null);
 		}
@@ -73,7 +73,7 @@ public class CTMath
 	
 	public static class ZeroSlope extends Slope2D
 	{
-		public ZeroSlope(Fraction y)
+		private ZeroSlope(Fraction y)
 		{
 			super(y, null);
 		}
