@@ -1,6 +1,10 @@
 package continuum.essentials.hooks;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
 
 public class ObjectHooks
 {
@@ -30,6 +34,13 @@ public class ObjectHooks
 		return false;
 	}
 	
+	public static <K, V> HashMap<K, V> fromEntries(Entry<K, V>... entries)
+	{
+		HashMap<K, V> map = Maps.<K, V>newHashMap();
+		for(Entry<K, V> entry : entries)
+			map.put(entry.getKey(), entry.getValue());
+		return map;
+	}
 	private static class IntegerIncrement implements Iterable<Integer>
 	{
 		private final Iter iterator;
