@@ -168,9 +168,16 @@ public class ApiPlugin implements IClassTransformer
 		}
 		return null;
 	}
+	
 	public static void putAPIPackage(String _package, Iterable<String> prerequisites)
 	{
 		packages.put(_package, Sets.newHashSet(prerequisites));
+	}
+	
+	public static void putAPIPackages(Iterable<String> packages, Iterable<String> prerequisites)
+	{
+		for(String _package : packages)
+			putAPIPackage(_package, prerequisites);
 	}
 	
 	public static void putAPIClass(String name, String path)

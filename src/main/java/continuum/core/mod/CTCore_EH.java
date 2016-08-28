@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class Core_EH
+public class CTCore_EH
 {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void addItemTooltip(ItemTooltipEvent event)

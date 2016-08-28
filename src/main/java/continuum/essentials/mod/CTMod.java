@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
 
-import continuum.core.mod.Core_OH;
+import continuum.core.mod.CTCore_OH;
 import net.minecraft.crash.CrashReport;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -43,7 +43,7 @@ public class CTMod<OH extends ObjectHolder, EH>
 	public CTMod(OH holder, EH eventHandler, ObjectLoader<OH, EH>... loaders)
 	{
 		this.objectHolder = holder;
-		Core_OH.mods.put(this.getObjectHolder().getModid().toLowerCase(), this);
+		CTCore_OH.mods.put(this.getObjectHolder().getModid().toLowerCase(), this);
 		this.loaders = Lists.newArrayList(loaders);
 		this.logger = LogManager.getLogger(this.getName());
 		if((this.eventHandler = eventHandler) != null)
@@ -229,12 +229,12 @@ public class CTMod<OH extends ObjectHolder, EH>
 		return this.getName() + " " + this.getVersion() + " For MC " + MinecraftForge.MC_VERSION + " " + this.getSide() + " Has ";
 	}
 	
-	private void printComplete(String stage)
+	public void printComplete(String stage)
 	{
 		this.getLogger().trace(this.getPrintStart() + "Completed " + stage + ".");
 	}
 	
-	private void printFailure(String stage, Exception e)
+	public void printFailure(String stage, Exception e)
 	{
 		this.getLogger().error(CrashReport.makeCrashReport(e, this.getPrintStart() + "Failed " + stage + ". " + this.getName() + " May Not Work Correctly.").getCompleteReport());
 	}

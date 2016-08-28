@@ -1,7 +1,7 @@
 package continuum.core.client;
 
-import continuum.core.mod.Core_EH;
-import continuum.core.mod.Core_OH;
+import continuum.core.mod.CTCore_EH;
+import continuum.core.mod.CTCore_OH;
 import continuum.essentials.mod.CTMod;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
@@ -21,13 +21,13 @@ public class ModelDirectory implements ICustomModelLoader
 	@Override
 	public boolean accepts(ResourceLocation location)
 	{
-		return Core_OH.models.containsKey(location);
+		return CTCore_OH.models.containsKey(location);
 	}
 	
 	@Override
 	public IModel loadModel(ResourceLocation location)
 	{
-		return Core_OH.models.get(location);
+		return CTCore_OH.models.get(location);
 	}
 	
 }

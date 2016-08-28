@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
@@ -49,6 +50,16 @@ public class UniquePositionIdentifier extends BlockPos
 		return this.access;
 	}
 	
+	public final int getCoordFromAxis(Axis axis)
+	{
+		switch(axis)
+		{
+			case X : return this.getX();
+			case Y : return this.getY();
+			case Z : return this.getZ();
+			default : return 0;
+		}
+	}
 	public IBlockState getBlockState()
 	{
 		return this.getBlockAccess().getBlockState(this);

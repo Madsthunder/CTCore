@@ -37,7 +37,6 @@ public class ConfigParser
 		public ConfigCategoryParser(ConfigCategory category)
 		{
 			this.category = category;
-			System.out.println(category);
 		}
 		
 		public Object get(String name, Object defaultt)

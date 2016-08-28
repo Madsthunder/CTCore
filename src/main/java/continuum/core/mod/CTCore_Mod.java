@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class CTCore_Mod extends DummyModContainer
 {
-	private CTMod<Core_OH, Core_EH> mod;
+	private CTMod<CTCore_OH, CTCore_EH> mod;
 	
 	public CTCore_Mod()
 	{
@@ -36,7 +36,7 @@ public class CTCore_Mod extends DummyModContainer
     @Subscribe
     public void construction(FMLConstructionEvent event)
     {
-    	(this.mod = new CTMod(Core_OH.getHolder(this), new Core_EH(), ClientLoader.I)).construction(event);
+    	(this.mod = new CTMod(CTCore_OH.getHolder(this), new CTCore_EH(), ClientLoader.I)).construction(event);
     }
     
     @Subscribe

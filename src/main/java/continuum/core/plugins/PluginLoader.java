@@ -13,7 +13,7 @@ public class PluginLoader implements IFMLLoadingPlugin
 	@Override
 	public String[] getASMTransformerClass()
 	{
-		return new String[] { "continuum.core.plugins.transformers.DebugEventTransformer" };
+		return new String[] { "continuum.core.plugins.transformers.DebugEventTransformer", "continuum.core.plugins.transformers.ApiPlugin" };
 	}
 
 	@Override

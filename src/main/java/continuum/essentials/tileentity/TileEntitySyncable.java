@@ -64,17 +64,30 @@ public abstract class TileEntitySyncable extends TileEntity
 	@Override
 	public NBTTagCompound getUpdateTag()
 	{
-		NBTTagCompound compound = super.getUpdateTag();
-		if(this.shouldSyncTags) compound.setTag("ItemsNBT", this.writeItemsToNBT());
+		NBTTagCompound compound = new NBTTagCompound();
+		BlockPos pos = this.getPos();
+		compound.setInteger("x", pos.getX());
+		compound.setInteger("y", pos.getY());
+		compound.setInteger("z", pos.getZ());
+		if(this.shouldSyncTags) compound.merge(this.writeItemsToNBT());
 		return compound;
+	}
+	
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket()
+	{
+		return this.shouldSyncTags ? new SPacketUpdateTileEntity(this.getPos(), 0, this.writeItemsToNBT()) : null;
 	}
 	
 	@Override
 	public void handleUpdateTag(NBTTagCompound compound)
 	{
-		NBTTagCompound items = compound.getCompoundTag("ItemsNBT");
-		compound.removeTag("ItemsNBT");
-		super.handleUpdateTag(compound);
 		this.readItemsFromNBT(compound);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
+	{
+		this.readItemsFromNBT(packet.getNbtCompound());
 	}
 }

@@ -11,18 +11,18 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 
-public class Core_OH implements ObjectHolder
+public class CTCore_OH implements ObjectHolder
 {
-	private static Core_OH holder;
+	private static CTCore_OH holder;
 	
-	static Core_OH getHolder(ModContainer mod)
+	static CTCore_OH getHolder(ModContainer mod)
 	{
-		return holder == null ? new Core_OH(mod) : holder;
+		return holder == null ? new CTCore_OH(mod) : holder;
 	}
 	
 	private final ModContainer mod;
 	
-	private Core_OH(ModContainer mod)
+	private CTCore_OH(ModContainer mod)
 	{
 		this.mod = mod;
 	}

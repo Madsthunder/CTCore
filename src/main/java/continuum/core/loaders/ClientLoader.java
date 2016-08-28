@@ -3,8 +3,8 @@ package continuum.core.loaders;
 import java.util.HashMap;
 
 import continuum.core.client.ModelDirectory;
-import continuum.core.mod.Core_EH;
-import continuum.core.mod.Core_OH;
+import continuum.core.mod.CTCore_EH;
+import continuum.core.mod.CTCore_OH;
 import continuum.essentials.mod.CTMod;
 import continuum.essentials.mod.ObjectLoader;
 import net.minecraft.launchwrapper.Launch;
@@ -14,7 +14,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ClientLoader implements ObjectLoader<Core_OH, Core_EH>
+public class ClientLoader implements ObjectLoader<CTCore_OH, CTCore_EH>
 {
 	public static final ClientLoader I = new ClientLoader();
 	
@@ -25,7 +25,7 @@ public class ClientLoader implements ObjectLoader<Core_OH, Core_EH>
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void construction(CTMod<Core_OH, Core_EH> mod)
+	public void construction(CTMod<CTCore_OH, CTCore_EH> mod)
 	{
 		ModelLoaderRegistry.registerLoader(new ModelDirectory());
 		try

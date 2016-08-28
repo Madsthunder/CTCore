@@ -11,23 +11,30 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class ClientHooks
 {
+	@SideOnly(Side.CLIENT)
+	private static final Minecraft mc = Minecraft.getMinecraft();
+	
 	public static ResourceLocation fromMC(String location)
 	{
 		return new ResourceLocation("minecraft", location);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static void assignAllItemsToVariant(String variant, Block... blocks)
 	{
 		assignAllItemsToVariant(variant, 0, blocks);
 	}
 	
-	public static void assignAllItemsToVariant(String variant, Integer meta, Block... blocks)
+	@SideOnly(Side.CLIENT)
+	public static void assignAllItemsToVariant(String variant, int meta, Block... blocks)
 	{
 		Item item;
 		ResourceLocation name;
@@ -35,63 +42,52 @@ public class ClientHooks
 			if((item = Item.getItemFromBlock(block)) != null && (name = item.getRegistryName()) != null)
 				ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(name, variant));
 	}
-	
-	public static void assignAllModelsToItem(Block block, String... locations)
+
+	@SideOnly(Side.CLIENT)
+	public static void assignAllModelsToItem(IForgeRegistryEntry entry, String... locations)
 	{
-		assignAllModelsToItem(ModHooks.getCurrentModid(), Item.getItemFromBlock(block), locations);
+		assignAllModelsToItem(ModHooks.getCurrentModid(), entry, locations);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void assignAllModelsToItem(String modid, IForgeRegistryEntry entry, String... locations)
+	{
+		assignAllModelsToItem(modid, 0, entry, locations);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void assignAllModelsToItem(int metaOffset, IForgeRegistryEntry entry, String... locations)
+	{
+		assignAllModelsToItem(ModHooks.getCurrentModid(), metaOffset, entry, locations);
 	}
 	
-	public static void assignAllModelsToItem(Item item, String... locations)
+	@SideOnly(Side.CLIENT)
+	public static void assignAllModelsToItem(String modid, int metaOffset, IForgeRegistryEntry entry, String... locations)
 	{
-		assignAllModelsToItem(ModHooks.getCurrentModid(), item, locations);
+		Item item = ForgeRegistries.ITEMS.getValue(entry.getRegistryName());
+		if(item != null)
+			for (int i : ObjectHooks.increment(locations.length))
+				ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
 	}
 	
-	public static void assignAllModelsToItem(String modid, Block block, String... locations)
+	public static boolean isFancyEnabled()
 	{
-		assignAllModelsToItem(modid, 0, Item.getItemFromBlock(block), locations);
+		return FMLCommonHandler.instance().getSide() == Side.CLIENT ? mc.isFancyGraphicsEnabled() : false;
 	}
 	
-	public static void assignAllModelsToItem(String modid, Item item, String... locations)
-	{
-		assignAllModelsToItem(modid, 0, item, locations);
-	}
-	
-	public static void assignAllModelsToItem(Integer metaOffset, Block block, String... locations)
-	{
-		assignAllModelsToItem(ModHooks.getCurrentModid(), metaOffset, Item.getItemFromBlock(block), locations);
-	}
-	
-	public static void assignAllModelsToItem(Integer metaOffset, Item item, String... locations)
-	{
-		assignAllModelsToItem(ModHooks.getCurrentModid(), metaOffset, item, locations);
-	}
-	
-	public static void assignAllModelsToItem(String modid, Integer metaOffset, Block block, String... locations)
-	{
-		assignAllModelsToItem(modid, metaOffset, Item.getItemFromBlock(block), locations);
-	}
-	
-	public static void assignAllModelsToItem(String modid, Integer metaOffset, Item item, String... locations)
-	{
-		for (Integer i : ObjectHooks.increment(locations.length))
-			ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
-	}
-	
-	public static Boolean isFancyEnabled()
-	{
-		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
-	}
-	
+	@SideOnly(Side.CLIENT)
 	public static void registerColorMultiplier(IBlockColor multiplier, Block... blocks)
 	{
-		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(multiplier, blocks);
+		mc.getBlockColors().registerBlockColorHandler(multiplier, blocks);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void registerColorMultiplier(IItemColor multiplier, Item... items)
 	{
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(multiplier, items);
+		mc.getItemColors().registerItemColorHandler(multiplier, items);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static Pair<Integer, Integer> getRotations(ModelRotation rotation)
 	{
 		String r = rotation.name().toLowerCase();
@@ -99,29 +95,34 @@ public class ClientHooks
 		Integer y = r.endsWith("y270") ? 270 : r.endsWith("y180") ? 180 : r.endsWith("y90") ? 90 : 0;
 		return Pair.of(x, y);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static ModelRotation addRotations(ModelRotation rotation1, ModelRotation rotation2)
 	{
 		Pair<Integer, Integer> rotations = addRotations(getRotations(rotation1), getRotations(rotation2));
 		return ModelRotation.getModelRotation(rotations.getLeft(), rotations.getRight());
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static ModelRotation addRotations(ModelRotation rotation1, Pair<Integer, Integer> rotations2)
 	{
 		Pair<Integer, Integer> rotations = addRotations(getRotations(rotation1), rotations2);
 		return ModelRotation.getModelRotation(rotations.getLeft(), rotations.getRight());
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static Pair<Integer, Integer> addRotations(Pair<Integer, Integer> rotations1, ModelRotation rotation2)
 	{
 		return addRotations(rotations1, getRotations(rotation2));
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static Pair<Integer, Integer> addRotations(Pair<Integer, Integer> rotations1, Pair<Integer, Integer> rotations2)
 	{
 		return addRotations(rotations1.getLeft(), rotations1.getRight(), rotations2.getLeft(), rotations2.getRight());
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static Pair<Integer, Integer> addRotations(Integer x1, Integer y1, Integer x2, Integer y2)
 	{
 		Integer x = x1 + x2, y = y1 + y2;

@@ -36,7 +36,7 @@ public class ObjectHooks
 	
 	public static <K, V> HashMap<K, V> fromEntries(Entry<K, V>... entries)
 	{
-		HashMap<K, V> map = Maps.<K, V>newHashMap();
+		HashMap<K, V> map = Maps.newHashMap();
 		for(Entry<K, V> entry : entries)
 			map.put(entry.getKey(), entry.getValue());
 		return map;
