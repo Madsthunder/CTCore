@@ -11,22 +11,22 @@ import net.minecraftforge.fml.common.registry.IForgeRegistry.SubstitutionCallbac
 
 public class Registries
 {
-	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, Integer min, Integer max)
+	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, int min, int max)
 	{
 		return createRegistry(clasz, null, min, max, null, null, null, null);
 	}
 	
-	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, ResourceLocation defaultValue, Integer min, Integer max)
+	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, ResourceLocation defaultValue, int min, int max)
 	{
 		return createRegistry(clasz, defaultValue, min, max, null, null, null, null);
 	}
 	
-	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, Integer min, Integer max, CreateCallback<V> create, ClearCallback<V> clear, AddCallback<V> add, SubstitutionCallback<V> substitution)
+	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, int min, int max, CreateCallback<V> create, ClearCallback<V> clear, AddCallback<V> add, SubstitutionCallback<V> substitution)
 	{
 		return createRegistry(clasz, null, min, max, create, clear, add, substitution);
 	}
 	
-	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, ResourceLocation defaultValue, Integer min, Integer max, CreateCallback<V> create, ClearCallback<V> clear, AddCallback<V> add, SubstitutionCallback<V> substitution)
+	public static <V extends IForgeRegistryEntry<V>> FMLControlledNamespacedRegistry<V> createRegistry(Class<? extends V> clasz, ResourceLocation defaultValue, int min, int max, CreateCallback<V> create, ClearCallback<V> clear, AddCallback<V> add, SubstitutionCallback<V> substitution)
 	{
 		return new FMLControlledNamespacedRegistry(defaultValue, min, max, clasz, HashBiMap.create(), add, clear, create, substitution);
 	}
