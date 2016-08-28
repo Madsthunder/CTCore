@@ -1,9 +1,12 @@
 package continuum.essentials.hooks;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +28,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockHooks
 {
+	public static final Predicate<AxisAlignedBB> notZeroVolume = new Predicate<AxisAlignedBB>()
+			{
+				@Override
+				public boolean apply(AxisAlignedBB aabb)
+				{
+					return getVolume(aabb) != 0;
+				}
+			};
+			
 	public static List<BlockSnapshot> setBlockStateWithSnapshots(World world, BlockPos pos, IBlockState state)
 	{
 		world.captureBlockSnapshots = true;
@@ -115,7 +127,59 @@ public class BlockHooks
 					double x = pos.getX() + (j + .5) / 4;
 					double y = pos.getY() + (k + .5) / 4;
 					double z = pos.getZ() + (l + .5) / 4;
-					manager.addEffect(((ParticleDigging)new ParticleDigging.Factory().getEntityFX(0, world, x, y, z, x - pos.getX() - 0.5D, y - pos.getY() - 0.5D, z - pos.getZ() - 0.5D, Block.getStateId(state))).setBlockPos(pos));
+					manager.addEffect(((ParticleDigging)new ParticleDigging.Factory().getEntityFX(0, world, x, y, z, x - pos.getX() - .5, y - pos.getY() - .5, z - pos.getZ() - .5, Block.getStateId(state))).setBlockPos(pos));
 				}
+	}
+	
+	public static HashSet<AxisAlignedBB> splitAABB(AxisAlignedBB subject, Vec3d vec)
+	{
+		AxisAlignedBB wdn = new AxisAlignedBB(subject.minX, subject.minY, subject.minZ, vec.xCoord, vec.yCoord, vec.zCoord);
+		AxisAlignedBB edn = new AxisAlignedBB(vec.xCoord, subject.minY, subject.minZ, subject.maxX, vec.yCoord, vec.zCoord);
+		AxisAlignedBB wun = new AxisAlignedBB(subject.minX, vec.yCoord, subject.minZ, vec.xCoord, subject.maxY, vec.zCoord);
+		AxisAlignedBB eun = new AxisAlignedBB(vec.xCoord, vec.yCoord, subject.minZ, subject.maxX, subject.maxY, vec.zCoord);
+		AxisAlignedBB wds = new AxisAlignedBB(subject.minX, subject.minY, vec.zCoord, vec.xCoord, vec.yCoord, subject.maxZ);
+		AxisAlignedBB eds = new AxisAlignedBB(vec.xCoord, subject.minY, vec.zCoord, subject.maxX, vec.yCoord, subject.maxZ);
+		AxisAlignedBB wus = new AxisAlignedBB(subject.minX, vec.yCoord, vec.zCoord, vec.xCoord, subject.maxY, subject.maxZ);
+		AxisAlignedBB eus = new AxisAlignedBB(vec.xCoord, vec.yCoord, vec.zCoord, subject.maxX, subject.maxY, subject.maxZ);
+		return Sets.newHashSet(wdn, edn, wun, eun, wds, eds, wus, eus);
+	}
+	
+	public static double getVolume(AxisAlignedBB aabb)
+	{
+		return (aabb.maxX - aabb.minX) * (aabb.maxY - aabb.minY) * (aabb.maxZ - aabb.minZ);
+	}
+	
+	public static class Vec3dIntersects implements Predicate<Vec3d>
+	{
+		private final AxisAlignedBB aabb;
+		
+		public Vec3dIntersects(AxisAlignedBB aabb)
+		{
+			this.aabb = aabb;
+		}
+		
+		@Override
+		public boolean apply(Vec3d vec)
+		{
+			return aabb.isVecInside(vec);
+		}
+	}
+	
+	public static class AABBValid implements Predicate<AxisAlignedBB>
+	{
+		private final AxisAlignedBB aabb;
+		private final AxisAlignedBB exclude;
+		
+		public AABBValid(AxisAlignedBB aabb, AxisAlignedBB exclude)
+		{
+			this.aabb = aabb;
+			this.exclude = exclude;
+		}
+		
+		@Override
+		public boolean apply(AxisAlignedBB aabb)
+		{ 
+			return !exclude.intersectsWith(aabb) && getVolume(aabb) > 0;
+		}
 	}
 }
