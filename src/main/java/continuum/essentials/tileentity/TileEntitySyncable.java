@@ -19,7 +19,7 @@ import net.minecraft.world.World;
  */
 public abstract class TileEntitySyncable extends TileEntity
 {
-	public final Boolean shouldSyncTags;
+	public final boolean shouldSyncTags;
 	
 	public TileEntitySyncable()
 	{
