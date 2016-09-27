@@ -3,11 +3,14 @@ package continuum.essentials.hooks;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import continuum.essentials.block.AABBVertex;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleDigging;
@@ -149,37 +152,65 @@ public class BlockHooks
 		return (aabb.maxX - aabb.minX) * (aabb.maxY - aabb.minY) * (aabb.maxZ - aabb.minZ);
 	}
 	
-	public static class Vec3dIntersects implements Predicate<Vec3d>
+	public static <T> Iterable<AxisAlignedBB> splitAABBs(Iterable<AxisAlignedBB> boxes, Iterable<? extends T> list, Predicate<? super T> predicate, Function<? super T, Iterable<AxisAlignedBB>> function)
 	{
-		private final AxisAlignedBB aabb;
-		
-		public Vec3dIntersects(AxisAlignedBB aabb)
+		for(T t : list)
+			if(predicate.apply(t))
+			{
+				AxisAlignedBB aabb2;
+				Set<AxisAlignedBB> aabbs = Sets.newHashSet();
+				for(AxisAlignedBB aabb0 : function.apply(t))
+					for(AABBVertex vertex0 : AABBVertex.fromAABB(aabb0))
+						for(AxisAlignedBB aabb1 : boxes)
+							for(AABBVertex vertex1 : vertex0.linkVerticiesToAABB(aabb1, aabb0))
+								if((aabb2 = vertex1.getAABB()) != null)
+									aabbs.add(aabb2);
+				if(!aabbs.isEmpty())
+						boxes = aabbs;
+			}
+		return boxes;
+	}
+	
+	public static boolean isInsideAABB(AxisAlignedBB aabb, Number x, Number y, Number z)
+	{
+		return isInsideAABB(aabb, new Vec3d(x.doubleValue(), y.doubleValue(), z.doubleValue()));
+	}
+	
+	public static boolean isInsideAABB(AxisAlignedBB aabb, Vec3d vec)
+	{
+		return aabb.intersectsWithXY(vec) && aabb.intersectsWithXZ(vec) && aabb.intersectsWithYZ(vec);
+	}
+	
+	public static boolean isFlushWithSide(EnumFacing direction, AxisAlignedBB aabb, AxisAlignedBB subject)
+	{
+		switch(direction)
 		{
-			this.aabb = aabb;
-		}
-		
-		@Override
-		public boolean apply(Vec3d vec)
-		{
-			return aabb.isVecInside(vec);
+			case DOWN : return aabb.minY == subject.minY;
+			case UP : return aabb.maxY == subject.maxY;
+			case NORTH : return aabb.minZ == subject.minZ;
+			case SOUTH : return aabb.maxZ == subject.maxZ;
+			case WEST : return aabb.minX == subject.minX;
+			case EAST : return aabb.maxX == subject.maxX;
+			default : return false;
 		}
 	}
 	
-	public static class AABBValid implements Predicate<AxisAlignedBB>
+	public static AxisAlignedBB createAABBFromSide(EnumFacing direction, AxisAlignedBB aabb)
 	{
-		private final AxisAlignedBB aabb;
-		private final AxisAlignedBB exclude;
-		
-		public AABBValid(AxisAlignedBB aabb, AxisAlignedBB exclude)
+		switch(direction)
 		{
-			this.aabb = aabb;
-			this.exclude = exclude;
+			case DOWN : return new AxisAlignedBB(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.minY, aabb.maxZ);
+			case UP : return new AxisAlignedBB(aabb.minX, aabb.maxY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ);
+			case NORTH : return new AxisAlignedBB(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.minZ);
+			case SOUTH : return new AxisAlignedBB(aabb.minX, aabb.minY, aabb.maxZ, aabb.maxX, aabb.maxY, aabb.maxZ);
+			case WEST : return new AxisAlignedBB(aabb.minX, aabb.minY, aabb.minZ, aabb.minX, aabb.maxY, aabb.maxZ);
+			case EAST : return new AxisAlignedBB(aabb.maxX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ);
+			default : return null;
 		}
-		
-		@Override
-		public boolean apply(AxisAlignedBB aabb)
-		{ 
-			return !exclude.intersectsWith(aabb) && getVolume(aabb) > 0;
-		}
+	}
+	
+	public static AxisAlignedBB dialate(AxisAlignedBB aabb, double by)
+	{
+		return new AxisAlignedBB(aabb.minX * by, aabb.minY * by, aabb.minZ * by, aabb.maxX * by, aabb.maxY * by, aabb.maxZ * by);
 	}
 }
