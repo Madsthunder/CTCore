@@ -11,24 +11,26 @@ import net.minecraft.world.World;
 /**
  * 
  * @author Madsthunder Convenience class primariy used to send and recieve
- *         packets. Uses the variable {@link TileEntitySyncable#shouldSyncTags} to
+ *         packets. Uses the variable {@link TileEntitySyncable#syncTags} to
  *         detect whether packets should be sent and recieved. BY DEFAULT
- *         {@link TileEntitySyncable#shouldSyncTags} IS FALSE, DEFINE WHETHER THIS
+ *         {@link TileEntitySyncable#syncTags} IS FALSE, DEFINE WHETHER THIS
  *         IS TRUE IN YOUR TILEENTITY CONSTRUCTOR.
  *
  */
-public abstract class TileEntitySyncable extends TileEntity
+public class TileEntitySyncable extends TileEntity
 {
-	public final boolean shouldSyncTags;
+	public final boolean syncTags;
+	public final boolean syncCaps;
 	
 	public TileEntitySyncable()
 	{
-		this(false);
+		this(true, true);
 	}
 	
-	public TileEntitySyncable(Boolean packets)
+	public TileEntitySyncable(boolean tags, boolean caps)
 	{
-		this.shouldSyncTags = packets;
+		this.syncTags = tags;
+		this.syncCaps = caps;
 	}
 	
 	@Override
@@ -44,7 +46,10 @@ public abstract class TileEntitySyncable extends TileEntity
 	 * @return An {@link NBTTagCompound} that is later merged with another
 	 *         {@link NBTTagCompound} in {@link #writeToNBT(NBTTagCompound)}
 	 */
-	public abstract NBTTagCompound writeItemsToNBT();
+	public NBTTagCompound writeItemsToNBT()
+	{
+		return new NBTTagCompound();
+	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
@@ -59,7 +64,10 @@ public abstract class TileEntitySyncable extends TileEntity
 	 *            The {@link NBTTagCompound} from
 	 *            {@link #readFromNBT(NBTTagCompound)}
 	 */
-	public abstract void readItemsFromNBT(NBTTagCompound compound);
+	public void readItemsFromNBT(NBTTagCompound compound)
+	{
+		
+	}
 	
 	@Override
 	public NBTTagCompound getUpdateTag()
@@ -69,20 +77,26 @@ public abstract class TileEntitySyncable extends TileEntity
 		compound.setInteger("x", pos.getX());
 		compound.setInteger("y", pos.getY());
 		compound.setInteger("z", pos.getZ());
-		if(this.shouldSyncTags) compound.merge(this.writeItemsToNBT());
+		if(this.syncTags) compound.merge(this.writeItemsToNBT());
+		NBTTagCompound compound1 = new NBTTagCompound();
+		super.readFromNBT(compound1);
+		if(this.syncCaps && compound1.hasKey("ForgeCaps"))
+			compound1.setTag("ForgeCaps", compound1.getCompoundTag("ForgeCaps"));
 		return compound;
 	}
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{
-		return this.shouldSyncTags ? new SPacketUpdateTileEntity(this.getPos(), 0, this.writeItemsToNBT()) : null;
+		return super.getUpdatePacket();//this.syncTags ? new SPacketUpdateTileEntity(this.getPos(), 0, this.writeItemsToNBT()) : null;
 	}
 	
 	@Override
 	public void handleUpdateTag(NBTTagCompound compound)
 	{
 		this.readItemsFromNBT(compound);
+		super.readFromNBT(compound);
+		System.out.println(compound);
 	}
 	
 	@Override
