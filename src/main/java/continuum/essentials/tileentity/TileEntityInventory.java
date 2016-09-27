@@ -28,17 +28,17 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 {
 	private String customName;
 	private final ItemStack[] stacks;
-	private final Integer stackSizeLimit;
+	private final int stackSizeLimit;
 	private UUID owner;
-	private Boolean modified = false;
+	private boolean modified;
 	private InvWrapper wrapper;
 	
-	public TileEntityInventory(Integer inventorySize)
+	public TileEntityInventory(int inventorySize)
 	{
 		this(inventorySize, 64);
 	}
 	
-	public TileEntityInventory(Integer inventorySize, Integer stackSizeLimit)
+	public TileEntityInventory(int inventorySize, int stackSizeLimit)
 	{
 		this.stacks = new ItemStack[inventorySize];
 		this.stackSizeLimit = stackSizeLimit;
@@ -108,14 +108,6 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 		this.markDirty();
 		return stack;
 	}
-	
-	/**@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
-	{
-		if(this.modified)
-			return !(this.modified = false);
-		return super.shouldRefresh(world, pos, oldState, newState);
-	}*/
 	
 	@Override
 	public ItemStack removeStackFromSlot(int index)
