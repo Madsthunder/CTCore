@@ -20,7 +20,7 @@ public class LeavesColorMultiplier implements IBlockColor, IItemColor
 	@Override
 	public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex)
 	{
-		return ObjectHooks.anyNull(access, pos) ? ColorizerFoliage.getFoliageColorBasic() : BiomeColorHelper.getFoliageColorAtPos(access, pos);
+		return access == null || pos == null ? ColorizerFoliage.getFoliageColorBasic() : BiomeColorHelper.getFoliageColorAtPos(access, pos);
 	}
 
 	@Override
