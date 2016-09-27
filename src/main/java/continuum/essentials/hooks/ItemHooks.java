@@ -17,6 +17,11 @@ public class ItemHooks
 		return registerItemBlock(new ItemBlockMeta(block, maxMeta), block);
 	}
 	
+	public static ItemBlock registerItemBlock(ItemBlock item)
+	{
+		return registerItemBlock(item, item.block);
+	}
+	
 	public static ItemBlock registerItemBlock(ItemBlock item, Block block)
 	{
 		ForgeRegistries.ITEMS.register(item.setRegistryName(block.getRegistryName()));
