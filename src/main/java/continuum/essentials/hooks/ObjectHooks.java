@@ -2,8 +2,11 @@ package continuum.essentials.hooks;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class ObjectHooks
@@ -18,20 +21,12 @@ public class ObjectHooks
 		return new IntegerIncrement(start, end);
 	}
 	
-	public static Boolean anyNull(Object... objects)
+	public static <T, O> List<O> applyAll(Function<T, O> function, Iterable<T> ts)
 	{
-		for(Object obj : objects)
-			if(obj == null)
-				return true;
-		return false;
-	}
-	
-	public static Boolean anyNull(Iterable<Object> objects)
-	{
-		for(Object obj : objects)
-			if(obj == null)
-				return true;
-		return false;
+		List list = Lists.newArrayList();
+		for(T t : ts)
+			list.add(function.apply(t));
+		return list;
 	}
 	
 	public static <K, V> HashMap<K, V> fromEntries(Entry<K, V>... entries)
@@ -79,5 +74,26 @@ public class ObjectHooks
 				return this.increment++;
 			}
 		}
+	}
+	
+	public static Integer greatestNumber(Iterable<Integer> ints)
+	{
+		Integer i = null;
+		for(Integer integer : ints)
+			if(i == null || integer > i)
+				i = integer;
+		return i;
+	}
+	
+	public static String toSection(String string, char sectionStart, char sectionEnd)
+	{
+		if(string != null)
+		{
+			int start = string.indexOf(sectionStart);
+			int end = string.indexOf(sectionEnd);
+			if(start > -1 && start < end)
+				return string.substring(start + 1, end);
+		}
+		return null;
 	}
 }
