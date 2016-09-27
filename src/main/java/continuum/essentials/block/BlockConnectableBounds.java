@@ -22,9 +22,9 @@ public abstract class BlockConnectableBounds extends BlockConnectable implements
 	private final ConnectableCuboids cuboids;
 	private AxisAlignedBB bounds = Block.FULL_BLOCK_AABB;
 	
-	public BlockConnectableBounds(Material material, Predicate<Pair<IBlockAccess, BlockPos>> predicate, ConnectableCuboids cuboids)
+	public BlockConnectableBounds(Material material, ConnectableCuboids cuboids)
 	{
-		super(material, predicate);
+		super(material);
 		this.cuboids = cuboids;
 	}
 	

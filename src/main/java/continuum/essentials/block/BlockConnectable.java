@@ -21,7 +21,7 @@ public abstract class BlockConnectable extends Block implements IConnectable
 	public static final PropertyBool[] isConnected = new PropertyBool[] { PropertyBool.create("down"), PropertyBool.create("up"), PropertyBool.create("north"), PropertyBool.create("south"), PropertyBool.create("west"), PropertyBool.create("east") };
 	public static final IUnlistedProperty<Boolean>[] isConectedUnlisted = new IUnlistedProperty[] { Properties.toUnlisted(isConnected[0]), Properties.toUnlisted(isConnected[1]), Properties.toUnlisted(isConnected[2]), Properties.toUnlisted(isConnected[3]), Properties.toUnlisted(isConnected[4]), Properties.toUnlisted(isConnected[5]) };
 	
-	public BlockConnectable(Material material, Predicate<Pair<IBlockAccess, BlockPos>> predicate)
+	public BlockConnectable(Material material)
 	{
 		super(material);
 	}
