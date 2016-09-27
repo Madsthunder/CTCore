@@ -2,13 +2,14 @@ package continuum.core.mod;
 
 import java.util.HashMap;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
 import continuum.essentials.mod.CTMod;
 import continuum.essentials.mod.ObjectHolder;
+import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 
 public class CTCore_OH implements ObjectHolder
@@ -50,7 +51,7 @@ public class CTCore_OH implements ObjectHolder
 		return this.mod.getVersion();
 	}
 	
-	public static final HashMap<ResourceLocation, IModel> models = Maps.newHashMap();
+	public static final HashMap<ResourceLocation, Function<Object, IModel>> models = Maps.newHashMap();
 	
 	public static final HashMap<String, CTMod> mods = Maps.newHashMap();
 }
