@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
 
+import continuum.essentials.hooks.ObjectHooks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -27,7 +28,7 @@ public class CuboidSelector
 			candidates.add(block.rayTrace(pos, start, finish, cuboid.getSelectableCuboid()));
 		RayTraceResult result = null;
 		ICuboid cuboid = null;
-		for (Integer i = 0; i < cuboids.length; i++)
+		for(int i : ObjectHooks.increment(cuboids.length))
 		{
 			ICuboid cc = cuboids[i];
 			RayTraceResult rc = candidates.get(i);
