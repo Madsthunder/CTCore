@@ -76,7 +76,7 @@ public class ObjectHooks
 		}
 	}
 	
-	public static Integer greatestNumber(Iterable<Integer> ints)
+	public static int greatestNumber(Iterable<Integer> ints)
 	{
 		Integer i = null;
 		for(Integer integer : ints)
