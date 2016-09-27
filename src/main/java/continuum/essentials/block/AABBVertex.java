@@ -91,11 +91,19 @@ public class AABBVertex extends Vec3d
 	public AABBVertexSet linkVerticiesToAABB(AxisAlignedBB aabb, AxisAlignedBB exclusion)
 	{
 		HashSet<AABBVertex> verticies = Sets.newHashSet();
-		if(aabb.isVecInside(this))
+		if(aabb.minX <= this.xCoord && aabb.maxX >= this.xCoord && aabb.minY <= this.yCoord && aabb.maxY >= this.yCoord && aabb.minZ <= this.zCoord && this.zCoord <= aabb.maxZ)
 			for(AxisAlignedBB box : BlockHooks.splitAABB(aabb, this))
 				if(!exclusion.intersectsWith(box))
 					verticies.addAll(fromAABB(box));
 		return new AABBVertexSet(verticies);
+	}
+	
+	public boolean equals(Object obj)
+	{
+		boolean equals = super.equals(obj);
+		if(obj instanceof AABBVertex)
+			return equals && ((AABBVertex)obj).corner.equals(this.corner);
+		return equals;
 	}
 	
 	public String toString()
