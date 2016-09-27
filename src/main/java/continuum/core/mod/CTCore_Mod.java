@@ -3,8 +3,12 @@ package continuum.core.mod;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import continuum.core.client.ResourceManagerReloadListener;
 import continuum.core.loaders.ClientLoader;
 import continuum.essentials.mod.CTMod;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -43,6 +47,9 @@ public class CTCore_Mod extends DummyModContainer
     public void pre(FMLPreInitializationEvent event)
     {
     	this.mod.pre(event);
+    	IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
+    	if(manager instanceof IReloadableResourceManager)
+    		((IReloadableResourceManager)manager).registerReloadListener(new ResourceManagerReloadListener());
     }
     
     @Subscribe
