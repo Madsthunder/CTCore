@@ -25,15 +25,15 @@ public class CTMod<OH extends ObjectHolder, EH>
 {
 	private final OH objectHolder;
 	private final EH eventHandler;
-	private Boolean processed = false;
-	private Boolean constructed = false;
-	private Boolean preInited = false;
-	private Boolean inited = false;
-	private Boolean postInited = false;
+	private boolean processed = false;
+	private boolean constructed = false;
+	private boolean preInited = false;
+	private boolean inited = false;
+	private boolean postInited = false;
 	private List<ObjectLoader<OH, EH>> loaders;
 	private Logger logger;
 	private Side side;
-	private Integer remaining = 0;
+	private int remaining = 0;
 	
 	public CTMod(OH holder, ObjectLoader<OH, EH>... loaders)
 	{
@@ -114,11 +114,8 @@ public class CTMod<OH extends ObjectHolder, EH>
 			finally
 			{
 				this.preInited = true;
-				for (; this.remaining > 0; remaining--)
-				{
+				for (; this.remaining > 0; --remaining)
 					bar.step("Don't Read This");
-					System.out.println("step");
-				}
 				ProgressManager.pop(bar);
 			}
 		}
@@ -155,7 +152,6 @@ public class CTMod<OH extends ObjectHolder, EH>
 				for (; this.remaining > 0; remaining--)
 				{
 					bar.step("Don't Read This");
-					System.out.println("step");
 				}
 				ProgressManager.pop(bar);
 			}
@@ -193,7 +189,6 @@ public class CTMod<OH extends ObjectHolder, EH>
 				for (; this.remaining > 0; remaining--)
 				{
 					bar.step("Don't Read This");
-					System.out.println("step");
 				}
 				ProgressManager.pop(bar);
 			}
@@ -279,7 +274,7 @@ public class CTMod<OH extends ObjectHolder, EH>
 		return this.loaders;
 	}
 	
-	public final Integer getLoaderAmount()
+	public final int getLoaderAmount()
 	{
 		return this.getLoaders().size();
 	}
