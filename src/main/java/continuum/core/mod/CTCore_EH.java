@@ -8,7 +8,9 @@ import net.minecraft.client.audio.ISound;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,6 +21,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class CTCore_EH
 {
+	@SideOnly(Side.CLIENT)
+	private static ModelLoader modelLoader;
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void addItemTooltip(ItemTooltipEvent event)
 	{
@@ -44,5 +48,18 @@ public class CTCore_EH
 			event.setResultSound(((IAdaptableSound)sevent).getSound(sound, Minecraft.getMinecraft().theWorld, new BlockPos(MathHelper.floor_float(sound.getXPosF()), MathHelper.floor_float(sound.getYPosF()), MathHelper.floor_float(sound.getZPosF()))));
 			this.onSoundPlay(event);
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onModelBake(ModelBakeEvent event)
+	{
+		modelLoader = event.getModelLoader();
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static ModelLoader getModelLoader()
+	{
+		return modelLoader;
 	}
 }
