@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ModelRotation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
@@ -70,6 +71,12 @@ public class ClientHooks
 				ModelLoader.setCustomModelResourceLocation(item, i + metaOffset, new ModelResourceLocation(modid + ":" + locations[i], "inventory"));
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public static void assignAllBlocksToStateMapper(IStateMapper mapper, Block... blocks)
+	{
+		for(Block block : blocks)
+			ModelLoader.setCustomStateMapper(block, mapper);
+	}
 	public static boolean isFancyEnabled()
 	{
 		return FMLCommonHandler.instance().getSide() == Side.CLIENT ? mc.isFancyGraphicsEnabled() : false;
