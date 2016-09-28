@@ -12,7 +12,7 @@ public class ItemHooks
 		return registerItemBlock(new ItemBlock(block), block);
 	}
 	
-	public static ItemBlock registerItemBlockMeta(Block block, Integer maxMeta)
+	public static ItemBlock registerItemBlockMeta(Block block, int maxMeta)
 	{
 		return registerItemBlock(new ItemBlockMeta(block, maxMeta), block);
 	}
@@ -28,6 +28,20 @@ public class ItemHooks
 		return item;
 	}
 	
+	public static ItemBlock createItemBlock(Block block)
+	{
+		ItemBlock item = new ItemBlock(block);
+		item.setRegistryName(block.getRegistryName());
+		return item;
+	}
+	
+	public static ItemBlock createItemBlockMeta(Block block, int maxMeta)
+	{
+		ItemBlock item = new ItemBlockMeta(block, maxMeta);
+		item.setRegistryName(block.getRegistryName());
+		return item;
+	}
+	
 	public static Item[] allItemsToBlocks(Block... blocks)
 	{
 		Item[] items = new Item[blocks.length];
@@ -38,9 +52,9 @@ public class ItemHooks
 	
 	private static class ItemBlockMeta extends ItemBlock
 	{
-		private final Integer maxMeta;
+		private final int maxMeta;
 		
-		public ItemBlockMeta(Block block, Integer maxMeta)
+		public ItemBlockMeta(Block block, int maxMeta)
 		{
 			super(block);
 			this.setHasSubtypes(true);
