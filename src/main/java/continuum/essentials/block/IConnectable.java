@@ -16,7 +16,7 @@ public interface IConnectable
 	
 	public static boolean canOtherConnect(IBlockAccess access, BlockPos pos, EnumFacing direction)
 	{
-		Block block;
-		return (block = access.getBlockState(pos.offset(direction)).getBlock()) instanceof IConnectable ? ((IConnectable)block).canConnectTo(access, pos.offset(direction), direction.getOpposite()) : true;
+		Block block = access.getBlockState(pos.offset(direction)).getBlock();
+		return block instanceof IConnectable ? ((IConnectable)block).canConnectTo(access, pos.offset(direction), direction.getOpposite()) : true;
 	}
 }
