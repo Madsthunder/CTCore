@@ -21,16 +21,18 @@ public class TileEntitySyncable extends TileEntity
 {
 	public final boolean syncTags;
 	public final boolean syncCaps;
+	public final boolean syncPackets;
 	
 	public TileEntitySyncable()
 	{
-		this(true, true);
+		this(true, true, true);
 	}
 	
-	public TileEntitySyncable(boolean tags, boolean caps)
+	public TileEntitySyncable(boolean tags, boolean caps, boolean packets)
 	{
 		this.syncTags = tags;
 		this.syncCaps = caps;
+		this.syncPackets = packets;
 	}
 	
 	@Override
@@ -54,8 +56,10 @@ public class TileEntitySyncable extends TileEntity
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
+		BlockPos pos = !compound.hasKey("x") || !compound.hasKey("y") || !compound.hasKey("z") ? this.pos : null;
 		super.readFromNBT(compound);
 		this.readItemsFromNBT(compound);
+		this.pos = pos == null ? this.pos : pos;
 	}
 	
 	/**
@@ -81,27 +85,25 @@ public class TileEntitySyncable extends TileEntity
 		NBTTagCompound compound1 = new NBTTagCompound();
 		super.readFromNBT(compound1);
 		if(this.syncCaps && compound1.hasKey("ForgeCaps"))
-			compound1.setTag("ForgeCaps", compound1.getCompoundTag("ForgeCaps"));
+			compound.setTag("ForgeCaps", compound1.getCompoundTag("ForgeCaps"));
 		return compound;
 	}
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{
-		return super.getUpdatePacket();//this.syncTags ? new SPacketUpdateTileEntity(this.getPos(), 0, this.writeItemsToNBT()) : null;
+		return new SPacketUpdateTileEntity(this.getPos(), 0, this.getUpdateTag());
 	}
 	
 	@Override
 	public void handleUpdateTag(NBTTagCompound compound)
 	{
-		this.readItemsFromNBT(compound);
-		super.readFromNBT(compound);
-		System.out.println(compound);
+		this.readFromNBT(compound);
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
 	{
-		this.readItemsFromNBT(packet.getNbtCompound());
+		this.readFromNBT(packet.getNbtCompound());
 	}
 }
