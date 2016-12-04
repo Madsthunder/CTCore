@@ -28,20 +28,6 @@ public class ItemHooks
 		return item;
 	}
 	
-	public static ItemBlock createItemBlock(Block block)
-	{
-		ItemBlock item = new ItemBlock(block);
-		item.setRegistryName(block.getRegistryName());
-		return item;
-	}
-	
-	public static ItemBlock createItemBlockMeta(Block block, int maxMeta)
-	{
-		ItemBlock item = new ItemBlockMeta(block, maxMeta);
-		item.setRegistryName(block.getRegistryName());
-		return item;
-	}
-	
 	public static Item[] allItemsToBlocks(Block... blocks)
 	{
 		Item[] items = new Item[blocks.length];
@@ -50,7 +36,7 @@ public class ItemHooks
 		return items;
 	}
 	
-	private static class ItemBlockMeta extends ItemBlock
+	public static class ItemBlockMeta extends ItemBlock
 	{
 		private final int maxMeta;
 		
