@@ -75,12 +75,17 @@ public class ObjectHooks
 			}
 		}
 	}
-	
+
 	public static int greatestNumber(Iterable<Integer> ints)
 	{
-		Integer i = null;
-		for(Integer integer : ints)
-			if(i == null || integer > i)
+		return greatestNumber(ints, Integer.MIN_VALUE);
+	}
+	
+	public static int greatestNumber(Iterable<Integer> ints, int defaultValue)
+	{
+		int i = defaultValue;
+		for(int integer : ints)
+			if(integer > i)
 				i = integer;
 		return i;
 	}
