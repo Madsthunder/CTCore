@@ -1,11 +1,13 @@
 package continuum.essentials.client.state;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.item.ItemStack;
 
-public class StateMapperStatic extends StateMapperBase
+public class StateMapperStatic extends StateMapperBase implements ItemMeshDefinition
 {
 	private final ModelResourceLocation location;
 	
@@ -19,8 +21,14 @@ public class StateMapperStatic extends StateMapperBase
 	{
 		return this.location;
 	}
+
+	@Override
+	public ModelResourceLocation getModelLocation(ItemStack stack)
+	{
+		return this.location;
+	}
 	
-	public static IStateMapper create(ModelResourceLocation location)
+	public static StateMapperStatic create(ModelResourceLocation location)
 	{
 		return new StateMapperStatic(location);
 	}
