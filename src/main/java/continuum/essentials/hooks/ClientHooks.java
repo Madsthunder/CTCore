@@ -1,15 +1,31 @@
 package continuum.essentials.hooks;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.util.vector.Vector3f;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ModelRotation;
+import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -138,5 +154,27 @@ public class ClientHooks
 		for (; y >= 360;)
 			y -= 360;
 		return Pair.of(x, y);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static IBakedModel joinModels(IBlockState state, long seed, IBakedModel model, Iterable<IBakedModel> models)
+	{
+		return joinModels(state, seed, model.isAmbientOcclusion(), model.isGui3d(), model.getParticleTexture(), model.getItemCameraTransforms(), model.getOverrides(), models);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static IBakedModel joinModels(IBlockState state, long seed, boolean ambientOcclusion, boolean gui3d, TextureAtlasSprite particle, ItemCameraTransforms transforms, ItemOverrideList overrides, Iterable<IBakedModel> models)
+	{
+		List<BakedQuad> generalQuads = Lists.newArrayList();
+		Map<EnumFacing, List<BakedQuad>> faceQuads = Maps.newHashMap();
+		for(EnumFacing facing : EnumFacing.values())
+			faceQuads.put(facing, Lists.newArrayList());
+		for(IBakedModel model : models)
+		{
+			generalQuads.addAll(model.getQuads(state, null, seed));
+			for(EnumFacing facing : EnumFacing.values())
+				faceQuads.get(facing).addAll(model.getQuads(state, facing, seed));
+		}
+		return new SimpleBakedModel(generalQuads, faceQuads, ambientOcclusion, gui3d, particle, transforms, overrides);
 	}
 }
