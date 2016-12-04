@@ -75,7 +75,21 @@ public class ObjectHooks
 			}
 		}
 	}
-
+	
+	public static int leastNumber(Iterable<Integer> ints)
+	{
+		return leastNumber(ints, Integer.MAX_VALUE);
+	}
+	
+	public static int leastNumber(Iterable<Integer> ints, int defaultValue)
+	{
+		int i = defaultValue;
+		for(int integer : ints)
+			if(integer < i)
+				i = integer;
+		return i;
+	}
+	
 	public static int greatestNumber(Iterable<Integer> ints)
 	{
 		return greatestNumber(ints, Integer.MIN_VALUE);
