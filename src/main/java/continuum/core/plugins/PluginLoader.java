@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.IFMLCallHook;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name("Continuum: Core")
-@IFMLLoadingPlugin.MCVersion("1.10.2")
+@IFMLLoadingPlugin.MCVersion("1.11")
 @IFMLLoadingPlugin.TransformerExclusions({ "org", "com", "joptsimple", "oshi" })
 public class PluginLoader implements IFMLLoadingPlugin
 {
