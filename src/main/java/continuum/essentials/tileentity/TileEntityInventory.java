@@ -10,6 +10,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -21,7 +22,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public class TileEntityInventory extends TileEntitySyncable implements IInventory, IInteractionObject
 {
 	private String customName;
-	private final ItemStack[] stacks;
+	private final NonNullList<ItemStack> stacks;
 	private final int stackSizeLimit;
 	private UUID owner;
 	private boolean modified;
@@ -34,7 +35,7 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	
 	public TileEntityInventory(int inventorySize, int stackSizeLimit)
 	{
-		this.stacks = new ItemStack[inventorySize];
+		this.stacks = NonNullList.func_191197_a(inventorySize, ItemStack.field_190927_a);
 		this.stackSizeLimit = stackSizeLimit;
 	}
 	
@@ -86,13 +87,13 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	@Override
 	public int getSizeInventory()
 	{
-		return this.stacks.length;
+		return this.stacks.size();
 	}
 	
 	@Override
 	public ItemStack getStackInSlot(int index)
 	{
-		return this.stacks[index];
+		return this.stacks.get(index);
 	}
 	
 	@Override
@@ -113,9 +114,9 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
-		this.stacks[index] = stack;
-		if(stack != null && stack.stackSize > this.getInventoryStackLimit())
-			stack.stackSize = this.getInventoryStackLimit();
+		this.stacks.set(index, stack);
+		if(stack != null && stack.func_190916_E() > this.getInventoryStackLimit())
+			stack.func_190920_e(this.getInventoryStackLimit());
 		this.markDirty();
 	}
 	
@@ -206,5 +207,14 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	public void setOwner(UUID uuid)
 	{
 		this.owner = uuid;
+	}
+
+	@Override
+	public boolean func_191420_l()
+	{
+		for(ItemStack stack : this.stacks)
+			if(stack.func_190926_b())
+				return false;
+		return true;
 	}
 }

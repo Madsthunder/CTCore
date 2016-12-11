@@ -32,7 +32,7 @@ public class CraftingHooks
 		List<IRecipe> markedForRemoval = Lists.newArrayList();
 		ItemStack stack1;
 		for (IRecipe recipe : recipes)
-			if((stack1 = recipe.getRecipeOutput()) != null && stack.isItemEqual(stack) && stack1.stackSize == stack.stackSize)
+			if((stack1 = recipe.getRecipeOutput()) != null && stack.isItemEqual(stack) && stack1.func_190916_E() == stack.func_190916_E())
 				markedForRemoval.add(recipe);
 		for (IRecipe recipe : markedForRemoval)
 			recipes.remove(recipe);

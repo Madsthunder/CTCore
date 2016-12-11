@@ -117,7 +117,7 @@ public class BlockHooks
 				x = pos.getX() + aabb.maxX + d1;
 				break;
 		}
-		manager.addEffect(((ParticleDigging)new ParticleDigging.Factory().getEntityFX(0, world, x, y, z, 0, 0, 0, Block.getStateId(state))).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+		manager.addEffect(((ParticleDigging)new ParticleDigging.Factory().createParticle(0, world, x, y, z, 0, 0, 0, Block.getStateId(state))).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -130,7 +130,7 @@ public class BlockHooks
 					double x = pos.getX() + (j + .5) / 4;
 					double y = pos.getY() + (k + .5) / 4;
 					double z = pos.getZ() + (l + .5) / 4;
-					manager.addEffect(((ParticleDigging)new ParticleDigging.Factory().getEntityFX(0, world, x, y, z, x - pos.getX() - .5, y - pos.getY() - .5, z - pos.getZ() - .5, Block.getStateId(state))).setBlockPos(pos));
+					manager.addEffect(((ParticleDigging)new ParticleDigging.Factory().createParticle(0, world, x, y, z, x - pos.getX() - .5, y - pos.getY() - .5, z - pos.getZ() - .5, Block.getStateId(state))).setBlockPos(pos));
 				}
 	}
 	
