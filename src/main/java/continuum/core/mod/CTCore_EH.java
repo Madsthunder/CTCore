@@ -45,7 +45,7 @@ public class CTCore_EH
 		SoundEvent sevent;
 		if((sevent = ForgeRegistries.SOUND_EVENTS.getValue(sound.getSoundLocation())) instanceof IAdaptableSound)
 		{
-			event.setResultSound(((IAdaptableSound)sevent).getSound(sound, Minecraft.getMinecraft().theWorld, new BlockPos(MathHelper.floor_float(sound.getXPosF()), MathHelper.floor_float(sound.getYPosF()), MathHelper.floor_float(sound.getZPosF()))));
+			event.setResultSound(((IAdaptableSound)sevent).getSound(sound, Minecraft.getMinecraft().world, new BlockPos(MathHelper.floor(sound.getXPosF()), MathHelper.floor(sound.getYPosF()), MathHelper.floor(sound.getZPosF()))));
 			this.onSoundPlay(event);
 		}
 	}

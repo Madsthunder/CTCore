@@ -35,7 +35,7 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	
 	public TileEntityInventory(int inventorySize, int stackSizeLimit)
 	{
-		this.stacks = NonNullList.func_191197_a(inventorySize, ItemStack.field_190927_a);
+		this.stacks = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
 		this.stackSizeLimit = stackSizeLimit;
 	}
 	
@@ -115,8 +115,8 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
 		this.stacks.set(index, stack);
-		if(stack != null && stack.func_190916_E() > this.getInventoryStackLimit())
-			stack.func_190920_e(this.getInventoryStackLimit());
+		if(stack != null && stack.getCount() > this.getInventoryStackLimit())
+			stack.setCount(this.getInventoryStackLimit());
 		this.markDirty();
 	}
 	
@@ -127,7 +127,7 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	}
 	
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player)
+	public boolean isUsableByPlayer(EntityPlayer player)
 	{
 		return this.hasOwner() ? this.getOwner().equals(player.getUniqueID()) : true;
 	}
@@ -210,10 +210,10 @@ public class TileEntityInventory extends TileEntitySyncable implements IInventor
 	}
 
 	@Override
-	public boolean func_191420_l()
+	public boolean isEmpty()
 	{
 		for(ItemStack stack : this.stacks)
-			if(stack.func_190926_b())
+			if(stack.isEmpty())
 				return false;
 		return true;
 	}
