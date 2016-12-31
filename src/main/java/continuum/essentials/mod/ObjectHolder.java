@@ -15,7 +15,8 @@ import net.minecraft.item.ItemBlock;
 
 public interface ObjectHolder
 {
-	public static final Constructor<Item> DEFAULT_CONSTRUCTOR = getItemConstructor();
+	public static final Constructor<Block> DEFAULT_BLOCK_CONSTRUCTOR = getBlockConstructor();
+	public static final Constructor<Item> DEFAULT_ITEM_CONSTRUCTOR = getItemConstructor();
 	
 	public String getModid();
 	
@@ -32,6 +33,32 @@ public interface ObjectHolder
 		return block;
 	}
 	
+	public static List<Block> newBlocks(List<String> names, CreativeTabs tab)
+	{
+		return newBlocks(DEFAULT_BLOCK_CONSTRUCTOR, Lists.newArrayList(), names, tab);
+	}
+	
+	public static <B extends Block> List<B> newBlocks(Constructor<B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	{
+		List<B> blocks = Lists.newArrayList();
+		String current = "null";
+		int remaining = names.size();
+		try
+		{
+			for(String name : names)
+			{
+				current = name;
+				blocks.add(newBlock(constructor.newInstance(Iterables.toArray(constructor_args, Object.class)), name, tab));
+				remaining--;
+			}
+		}
+		catch(Exception exception)
+		{
+			throw new IllegalStateException("Failed To Construct Block \"" + current + "\" Due To A " + exception.getClass() + "; Had " + remaining + " Blocks Remaining.", exception);
+		}
+		return blocks;
+	}
+	
 	public static <I extends Item> I newItem(I item, String name, CreativeTabs tab)
 	{
 		item.setRegistryName(name);
@@ -43,7 +70,7 @@ public interface ObjectHolder
 	
 	public static List<Item> newItems(List<String> names, CreativeTabs tab)
 	{
-		return newItems(DEFAULT_CONSTRUCTOR, Lists.newArrayList(), names, tab);
+		return newItems(DEFAULT_ITEM_CONSTRUCTOR, Lists.newArrayList(), names, tab);
 	}
 	
 	public static <I extends Item> List<I> newItems(Constructor<I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
@@ -117,6 +144,19 @@ public interface ObjectHolder
 		if(tab != null)
 			block.setCreativeTab(tab);
 		return Pair.of(block, newItemBlock(block, meta));
+	}
+	
+	public static Constructor<Block> getBlockConstructor()
+	{
+		try
+		{
+			return Block.class.getConstructor();
+		}
+		catch(Exception exception)
+		{
+			throw new IllegalStateException("Failed To Get Default Item Constructor.", exception);
+		}
+		
 	}
 	
 	public static Constructor<Item> getItemConstructor()
