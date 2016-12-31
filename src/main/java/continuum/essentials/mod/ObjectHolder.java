@@ -2,10 +2,10 @@ package continuum.essentials.mod;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -41,19 +41,26 @@ public interface ObjectHolder
 	
 	public static <B extends Block> List<B> newBlocks(Constructor<B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
 	{
-		return newBlocks(new Callable<B>()
+		return newBlocks(new Function<List<Object>, B>()
 		{
 			
 			@Override
-			public B call() throws Exception
+			public B apply(List<Object> args)
 			{
-				return constructor.newInstance(Iterables.toArray(constructor_args, Object.class));
+				try
+				{
+					return constructor.newInstance(Iterables.toArray(args, Object.class));
+				}
+				catch(Exception exception)
+				{
+					throw new IllegalStateException(exception);
+				}
 			}
 			
 		}, constructor_args, names, tab);
 	}
 	
-	public static <B extends Block> List<B> newBlocks(Callable<B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	public static <B extends Block> List<B> newBlocks(Function<List<Object>, B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
 	{
 		List<B> blocks = Lists.newArrayList();
 		String current = "null";
@@ -63,7 +70,7 @@ public interface ObjectHolder
 			for(String name : names)
 			{
 				current = name;
-				blocks.add(newBlock(constructor.call(), name, tab));
+				blocks.add(newBlock(constructor.apply(constructor_args), name, tab));
 				remaining--;
 			}
 		}
@@ -90,18 +97,25 @@ public interface ObjectHolder
 	
 	public static <I extends Item> List<I> newItems(Constructor<I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
 	{
-		return newItems(new Callable()
+		return newItems(new Function<List<Object>, I>()
 		{
 			
 			@Override
-			public Object call() throws Exception
+			public I apply(List<Object> args)
 			{
-				return constructor.newInstance(Iterables.toArray(constructor_args, Object.class));
+				try
+				{
+					return constructor.newInstance(Iterables.toArray(args, Object.class));
+				}
+				catch(Exception exception)
+				{
+					throw new IllegalStateException(exception);
+				}
 			}
 		}, constructor_args, names, tab);
 	}
 	
-	public static <I extends Item> List<I> newItems(Callable<I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	public static <I extends Item> List<I> newItems(Function<List<Object>, I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
 	{
 		List<I> items = Lists.newArrayList();
 		String current = "null";
@@ -111,7 +125,7 @@ public interface ObjectHolder
 			for(String name : names)
 			{
 				current = name;
-				items.add(newItem(constructor.call(), name, tab));
+				items.add(newItem(constructor.apply(constructor_args), name, tab));
 				remaining--;
 			}
 		}
