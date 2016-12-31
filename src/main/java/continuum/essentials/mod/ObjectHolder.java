@@ -10,6 +10,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -37,6 +38,35 @@ public interface ObjectHolder
 	public static List<Block> newBlocks(List<String> names, CreativeTabs tab)
 	{
 		return newBlocks(DEFAULT_BLOCK_CONSTRUCTOR, Lists.newArrayList(), names, tab);
+	}
+	
+	public static <B extends Block> List<B> newBlocks(Class<B> block_class, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	{
+		for(Constructor<?> constructor : block_class.getConstructors())
+		{
+			if(constructor.getParameterCount() == constructor_args.size())
+			{
+				boolean correct = true;
+				for(int i = 0; i < constructor_args.size(); i++)
+					if(!constructor.getParameterTypes()[i].isAssignableFrom(constructor_args.get(i).getClass()))
+					{
+						correct = false;
+						break;
+					}
+				if(correct)
+				{
+					constructor.setAccessible(true);
+					return newBlocks((Constructor<B>)constructor, constructor_args, names, tab);
+				}
+			}
+		}
+		StringBuilder builder = new StringBuilder(constructor_args.isEmpty() ? "No Arguments" : "Arguments \"" + constructor_args.get(0));
+		for(int i = 1; i < constructor_args.size(); i++)
+		{
+			Object o = constructor_args.get(i);
+			builder.append("," + (o == null ? "null" : o.getClass()));
+		}
+		throw new IllegalStateException("Couldn't Find Constructor For \"" + block_class.getName() + "\" With " + builder.toString() + (constructor_args.isEmpty() ? "" : "\"") + ".");
 	}
 	
 	public static <B extends Block> List<B> newBlocks(Constructor<B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
@@ -93,6 +123,35 @@ public interface ObjectHolder
 	public static List<Item> newItems(List<String> names, CreativeTabs tab)
 	{
 		return newItems(DEFAULT_ITEM_CONSTRUCTOR, Lists.newArrayList(), names, tab);
+	}
+	
+	public static <I extends Item> List<I> newItems(Class<I> item_class, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	{
+		for(Constructor<?> constructor : item_class.getConstructors())
+		{
+			if(constructor.getParameterCount() == constructor_args.size())
+			{
+				boolean correct = true;
+				for(int i = 0; i < constructor_args.size(); i++)
+					if(!constructor.getParameterTypes()[i].isAssignableFrom(constructor_args.get(i).getClass()))
+					{
+						correct = false;
+						break;
+					}
+				if(correct)
+				{
+					constructor.setAccessible(true);
+					return newItems((Constructor<I>)constructor, constructor_args, names, tab);
+				}
+			}
+		}
+		StringBuilder builder = new StringBuilder(constructor_args.isEmpty() ? "No Arguments" : "Arguments \"" + constructor_args.get(0));
+		for(int i = 1; i < constructor_args.size(); i++)
+		{
+			Object o = constructor_args.get(i);
+			builder.append("," + (o == null ? "null" : o.getClass()));
+		}
+		throw new IllegalStateException("Couldn't Find Constructor For \"" + item_class.getName() + "\" With " + builder.toString() + (constructor_args.isEmpty() ? "" : "\"") + ".");
 	}
 	
 	public static <I extends Item> List<I> newItems(Constructor<I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
@@ -192,11 +251,11 @@ public interface ObjectHolder
 	{
 		try
 		{
-			return Block.class.getConstructor();
+			return Block.class.getConstructor(Material.class);
 		}
 		catch(Exception exception)
 		{
-			throw new IllegalStateException("Failed To Get Default Item Constructor.", exception);
+			throw new IllegalStateException("Failed To Get Default Block Constructor.", exception);
 		}
 		
 	}
