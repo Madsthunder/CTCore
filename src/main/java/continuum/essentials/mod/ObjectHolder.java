@@ -2,6 +2,7 @@ package continuum.essentials.mod;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -40,6 +41,20 @@ public interface ObjectHolder
 	
 	public static <B extends Block> List<B> newBlocks(Constructor<B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
 	{
+		return newBlocks(new Callable<B>()
+		{
+			
+			@Override
+			public B call() throws Exception
+			{
+				return constructor.newInstance(Iterables.toArray(constructor_args, Object.class));
+			}
+			
+		}, constructor_args, names, tab);
+	}
+	
+	public static <B extends Block> List<B> newBlocks(Callable<B> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	{
 		List<B> blocks = Lists.newArrayList();
 		String current = "null";
 		int remaining = names.size();
@@ -48,7 +63,7 @@ public interface ObjectHolder
 			for(String name : names)
 			{
 				current = name;
-				blocks.add(newBlock(constructor.newInstance(Iterables.toArray(constructor_args, Object.class)), name, tab));
+				blocks.add(newBlock(constructor.call(), name, tab));
 				remaining--;
 			}
 		}
@@ -75,6 +90,19 @@ public interface ObjectHolder
 	
 	public static <I extends Item> List<I> newItems(Constructor<I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
 	{
+		return newItems(new Callable()
+		{
+			
+			@Override
+			public Object call() throws Exception
+			{
+				return constructor.newInstance(Iterables.toArray(constructor_args, Object.class));
+			}
+		}, constructor_args, names, tab);
+	}
+	
+	public static <I extends Item> List<I> newItems(Callable<I> constructor, List<Object> constructor_args, List<String> names, CreativeTabs tab)
+	{
 		List<I> items = Lists.newArrayList();
 		String current = "null";
 		int remaining = names.size();
@@ -83,7 +111,7 @@ public interface ObjectHolder
 			for(String name : names)
 			{
 				current = name;
-				items.add(newItem(constructor.newInstance(Iterables.toArray(constructor_args, Object.class)), name, tab));
+				items.add(newItem(constructor.call(), name, tab));
 				remaining--;
 			}
 		}
