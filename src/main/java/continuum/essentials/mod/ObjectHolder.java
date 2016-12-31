@@ -13,9 +13,15 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
-public class ObjectHolder
+public interface ObjectHolder
 {
-	private static final Constructor<Item> DEFAULT_CONSTRUCTOR;
+	public static final Constructor<Item> DEFAULT_CONSTRUCTOR = getItemConstructor();
+	
+	public String getModid();
+	
+	public String getName();
+	
+	public String getVersion();
 	
 	public static <B extends Block> B newBlock(B block, String name, CreativeTabs tab)
 	{
@@ -113,15 +119,16 @@ public class ObjectHolder
 		return Pair.of(block, newItemBlock(block, meta));
 	}
 	
-	static
+	public static Constructor<Item> getItemConstructor()
 	{
 		try
 		{
-			DEFAULT_CONSTRUCTOR = Item.class.getConstructor();
+			return Item.class.getConstructor();
 		}
 		catch(Exception exception)
 		{
 			throw new IllegalStateException("Failed To Get Default Item Constructor.", exception);
 		}
+		
 	}
 }
