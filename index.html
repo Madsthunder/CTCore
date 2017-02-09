@@ -11,6 +11,13 @@
             top: 0;
             background-color: #FFA500;
         }
+        .titlebar a
+        {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s
+        }
         .sidenav
         {
             height: 100%;
@@ -45,6 +52,9 @@
         @media screen and (max-height: 450px) { .sidenav { padding-top: 15px; } .sidenav a {font-size: 18px;} }
     </style>
     <body>
+        <div id="titlebar" class="titlebar">
+            <a href="#">Continuum</a>
+        </div>
         <div id="sidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closenav()">&times;</a>
             <a href="#">Continuum</a>
@@ -53,7 +63,6 @@
             <a href="#">Metallurgic Extras</a>
         </div>
         <span style="font-size:30px;cursor:pointer" onclick="opennav()">&#9776; open</span>
-        <h1>Continuum</h1>
         <script>
             function opennav() { document.getElementById("sidenav").style.width = "250px"; }
             function closenav() { document.getElementById("sidenav").style.width = "0"; }
