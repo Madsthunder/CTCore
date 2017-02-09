@@ -43,8 +43,19 @@
     }
   </style>
   <body>
+    <div id="sidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closenav()">&times;</a>
+      <a href="#">MoarWoods</a>
+      <a href="#">Metallurgic Extras</a>
+      <a href="#">Redstone Logistics</a>
+    </div>
     <center>
       <h1>Continuum</h1>
     </center>
+    <span style="font-size:30px;cursor:pointer" onclick="opennav">&#9776;Menu</span>
+    <script>
+      function opennav() { document.getElementById("sidenav").style.width="250px"; }
+      function closenav() { document.getElementById("sidenav").style.width="0";}
+    </script>
   </body>
 </html>
