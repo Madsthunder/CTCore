@@ -2,10 +2,6 @@ package continuum.essentials.block;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.google.common.base.Predicate;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,12 +25,12 @@ public abstract class BlockConnectableBounds extends BlockConnectable implements
 	}
 	
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB box, List list, Entity entity)
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB box, List<AxisAlignedBB> boxes, Entity entity, boolean que)
 	{
 		AxisAlignedBB aabb;
-		for (ICuboid cuboid : this.cuboids.getCuboidsFromState(state.getActualState(world, pos)))
+		for(ICuboid cuboid : this.cuboids.getCuboidsFromState(state.getActualState(world, pos)))
 			if(box.intersectsWith((aabb = cuboid.getSelectableCuboid().offset(pos))))
-				list.add(aabb);
+				boxes.add(aabb);
 	}
 	
 	@Override
