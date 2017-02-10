@@ -7,19 +7,68 @@
             height: 75px;
             width: 100%;
             position: fixed;
-            z-index: 2;
+            z-index: 1;
             top: 0;
-            left: 0;
+            left: 50px;
             right: 0;
             background-color: #ffaa00;
+            text-align: center;
         }
         .titlebar a
         {
-            padding: 8px 8px 8px 32px;
             text-decoration: none;
             display: block;
             font-size: 75px;
             color: #818181;
+            transition: 0.3s
+        }
+        .sidebarcorner
+        {
+            height: 100px;
+            width: 50px;
+            position: fixed;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+        }
+        
+        .sidebarcorner span
+        {
+            cursor: pointer;
+            font-size: 50px;
+            text-align: center;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+        .sidebarsmall
+        {
+            height: 100%;
+            width: 50px;
+            position: fixed;
+            z-index: 2;
+            top: 100px;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+        .sidebarsmall img
+        {
+            width: 25px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-decoration: none;
+            color: #818181;
+            display: block;
             transition: 0.3s
         }
         .sidenav
@@ -27,25 +76,25 @@
             height: 100%;
             width: 0;
             position: fixed;
-            z-index: 1;
+            z-index: 2;
             top: 0;
-            left: 0;
+            left: 50px;
             background-color: #111;
             overflow-x: hidden;
             transition: 0.5s;
-            padding-top: 60px;
+            padding-top: 100px;
         }
         .sidenav a
         {
-            padding: 8px 8px 8px 32px;
+            padding: 8px 8px 8px 8px;
             text-decoration: none;
             font-size: 25px;
             color: #818181;
             display: block;
             transition: 0.3s
         }
-        .sidenav a:hover, .offcanvas a:focus { color: #f1f1f1; }
-        .sidenav .closebtn 
+        .sidenav a:hover, .titlebar a:hover, .sidebarcorner: span:hover, .sidebarsmall img:hover, .offcanvas a:focus { color: #f1f1f1; }
+        .sidenav .sidebarsmall
         {
             position: absolute;
             top: 0;
@@ -56,22 +105,36 @@
         @media screen and (max-height: 450px) { .sidenav { padding-top: 15px; } .sidenav a {font-size: 18px;} }
     </style>
     <body>
-        <div id="titlebar" class="titlebar">
-            <center>
-                <a href="#">Continuum</a>
-            </center>
-        </div>
         <div id="sidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closenav()">&times;</a>
             <a href="#">Continuum</a>
             <a href="#">MoarWoods</a>
             <a href="#">Redstone Logistics</a>
             <a href="#">Metallurgic Extras</a>
         </div>
-        <span style="font-size:30px;cursor:pointer" onclick="opennav()">&#9776; open</span>
+        <div id="sidebarcorner" class="sidebarcorner">
+            <span onclick="togglemenu()">&#9776;</span>
+        </div>
+        <div id="sidebarsmall" class="sidebarsmall">
+            <img src="https://t4.rbxcdn.com/4246784b1ac7ae103c497f6eda063228">
+            <img src="https://t4.rbxcdn.com/4246784b1ac7ae103c497f6eda063228">
+            <img src="https://t4.rbxcdn.com/4246784b1ac7ae103c497f6eda063228">
+            <img src="https://t4.rbxcdn.com/4246784b1ac7ae103c497f6eda063228">
+        </div>
+        <div id="titlebar" class="titlebar"> <a href="#">Continuum</a></div>
         <script>
-            function opennav() { document.getElementById("sidenav").style.width = "250px"; }
-            function closenav() { document.getElementById("sidenav").style.width = "0"; }
+            document.getElementById("sidenav").style.width = "0px";
+            function togglemenu()
+            {
+                var style = document.getElementById("sidenav").style;
+            	if(style.width === "0px")
+            	{
+                    style.width = "250px";
+            	}
+            	else
+           		{
+                    style.width = "0px";
+           		}
+           	}
         </script>
     </body>
 </html>
