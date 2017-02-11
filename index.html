@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
     <style>
@@ -39,6 +40,11 @@
             cursor: pointer;
             height: 100%;
             width: 100%;
+            font-size: 100%;
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: auto;
+            margin-right: auto;
             color: #818181;
             display: block;
         }
@@ -151,7 +157,7 @@
             {
             	if(http.readyState == 4)
            		{
-            		document.getElementById('titlebar').innerHTML=http.responseText;
+            		document.getElementById("titlebar").innerHTML=http.responseText;
            		}
             }
             sendHTTPRequest("src/main/sites/title.html", "titlebar");
