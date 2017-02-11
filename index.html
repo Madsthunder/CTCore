@@ -135,6 +135,30 @@
                     style.width = "0px";
            		}
            	}
+            function sendHTTPRequest(request)
+            {
+            	var http;
+            	if(navigator.appName == "Microsoft Internet Explorer")
+           		{
+            		http = new ActiveXObject("Microsoft.XMLHTTP");
+           		}
+            	else
+           		{
+            		http = new XMLHttpRequest();
+           		}
+            	http.open('get', request);
+            	http.onreadystatechange = onResponse;
+                console.log(http);
+            	http.send(null);
+            }
+            function onResponse(http)
+            {
+            	if(http.readyState == 4)
+           		{
+            		document.getElementById('titlebar').innerHTML=http.responseText;
+           		}
+            }
+            sendHTTPRequest('/src/main/sites/titlebar.html');
         </script>
     </body>
 </html>
