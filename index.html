@@ -135,7 +135,7 @@
                     style.width = "0px";
            		}
            	}
-            function sendHTTPRequest(request)
+            function sendHTTPRequest(request, element)
             {
             	var http;
             	if(navigator.appName == "Microsoft Internet Explorer")
@@ -146,7 +146,7 @@
            		{
             		http = new XMLHttpRequest();
            		}
-                http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.getElementById("titlebar").innerHTML=this.responseText}};
+                http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.getElementById(element)).innerHTML=this.responseText}};
             	http.open("get", request, true);
                 http.send();
                 console.log(http);
@@ -158,7 +158,7 @@
             		document.getElementById('titlebar').innerHTML=http.responseText;
            		}
             }
-            sendHTTPRequest("src/main/sites/titlebar.html");
+            sendHTTPRequest("src/main/sites/titlebar.html", "titlebar");
         </script>
     </body>
 </html>
