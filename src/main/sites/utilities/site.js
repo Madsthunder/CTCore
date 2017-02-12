@@ -1,18 +1,18 @@
-function preinitsite()
+function initsite()
 {
+	var head = document.getElementsByTagName("head")[0];
 	var style = document.createElement("link");
 	style.rel = "stylesheet";
 	style.type = "text/css";
 	style.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.css";
-	document.getElementsByTagName("head")[0].appendChild(style);
-	var http = getxmlhttp();
-	http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.body.innerHTML=this.responseText}};
-	sendrequest(http, "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html");
-	console.log(document);
+	head.appendChild(style);
+	var http = document.createElement("link");
+	http.rel = "import";
+	http.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html";
+	console.log(document.getElementById("titlebar"));
 }
 function postinitsite(resources)
 {
-	console.log(document.getElementById("titlebar"));
 	
 }
 
