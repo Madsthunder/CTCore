@@ -25,4 +25,3 @@ function sendrequest(http, location)
 	http.open("get", location, true);
 	http.send();
 }
-sendHTTPRequest("https://madsthunder.github.io/Continuum/src/main/sites/title.html", "titlebar");
