@@ -1,0 +1,109 @@
+body { font-family: "Lato", sans-serif; }
+.titlebar
+{
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 50px;
+  right: 0;
+  background-color: #ffaa00;
+  text-align: center;
+  vertical-align: middle;
+}
+.titlebar a
+{
+  text-decoration: none;
+  display: block;
+  font-size: 75px;
+  color: #818181;
+  transition: 0.3s
+}
+.utilities
+{
+  height: 25px;
+  width: 100%;
+  top: 75px;
+  left: 50px;
+  background-color: #111;
+}
+.sidebarcorner
+{
+  height: 75px;
+  width: 50px;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  text-align: center;
+}
+.sidebarcorner span
+{
+  cursor: pointer;
+  font-size: 65px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidebarsmall
+{
+  height: 100%;
+  width: 50px;
+  position: fixed;
+  z-index: 2;
+  top: 75px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+.sidebarsmall img
+{
+  width: 25px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidenav
+{
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 50px;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 75px;
+  white-space: nowrap;
+}
+.sidenav a
+{
+  padding: 8px 8px 8px 8px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s
+}
+.sidenav a:hover, .titlebar a:hover, .offcanvas a:focus { color: #f1f1f1; }
+.sidebarcorner:hover span { color: #f1f1f1; }
+.sidenav .sidebarsmall
+{
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+@media screen and (max-height: 100%) { .sidenav { padding-top: 15px; } .sidenav a {font-size: 18px;} }
