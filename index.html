@@ -23,6 +23,14 @@
             color: #818181;
             transition: 0.3s
         }
+        .utilities
+        {
+            height: 25px;
+            width: 100%;
+            top: 75px;
+            left: 50px;
+            background-color: #111;
+        }
         .sidebarcorner
         {
             height: 75px;
@@ -39,9 +47,10 @@
         .sidebarcorner span
         {
             cursor: pointer;
-            font-size: 37.5px;
+            font-size: 65px;
             color: #818181;
             display: block;
+            transition: 0.3s
         }
         .sidebarsmall
         {
@@ -80,6 +89,7 @@
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 75px;
+            white-space: nowrap;
         }
         .sidenav a
         {
@@ -90,7 +100,8 @@
             display: block;
             transition: 0.3s
         }
-        .sidenav a:hover, .titlebar a:hover, .sidebarcorner: span:hover, .sidebarsmall img:hover, .offcanvas a:focus { color: #f1f1f1; }
+        .sidenav a:hover, .titlebar a:hover, .offcanvas a:focus { color: #f1f1f1; }
+        .sidebarcorner:hover span { color: #f1f1f1; }
         .sidenav .sidebarsmall
         {
             position: absolute;
@@ -99,7 +110,7 @@
             font-size: 36px;
             margin-left: 50px;
         }
-        @media screen and (max-height: 450px) { .sidenav { padding-top: 15px; } .sidenav a {font-size: 18px;} }
+        @media screen and (max-height: 100%) { .sidenav { padding-top: 15px; } .sidenav a {font-size: 18px;} }
     </style>
     <body>
         <div id="sidenav" class="sidenav">
