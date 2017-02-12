@@ -9,6 +9,7 @@ function initsite()
 	var http = document.createElement("link");
 	http.rel = "import";
 	http.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html";
+	head.appendChild(http);
 	console.log(document.getElementById("titlebar"));
 }
 function postinitsite(resources)
