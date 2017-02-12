@@ -1,13 +1,11 @@
 function preinitsite()
 {
-	console.log(resources);
 	var style = document.createElement("link");
 	style.rel = "stylesheet";
 	style.type = "text/css";
 	style.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.css";
 	document.getElementsByTagName("head")[0].appendChild(style);
 	console.log(document);
-	console.log(resources);
 }
 function postinitsite(resources)
 {
