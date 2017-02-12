@@ -5,13 +5,14 @@ function preinitsite()
 	style.type = "text/css";
 	style.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.css";
 	document.getElementsByTagName("head")[0].appendChild(style);
+	var http = getxmlhttp();
+	http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.body.innerHTML=this.responseText}};
+	sendrequest(http, "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html");
 	console.log(document);
 }
 function postinitsite(resources)
 {
-	var http = getxmlhttp();
-	http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.body.innerHTML=this.responseText}};
-	sendrequest(http, "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html");
+	console.log(document.getElementById("titlebar"));
 	
 }
 
