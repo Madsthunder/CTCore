@@ -1,15 +1,14 @@
 function initsite(resources)
 {
 	console.log(resources);
+	var style = document.createElement("link");
+	style.rel = "stylesheet";
+	style.type = "text/css";
+	style.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.css";
 	var http = getxmlhttp();
 	http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.body.innerHTML=this.responseText}};
 	sendrequest(http, "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html");
-	var style = document.createElement("link");
-	link.rel = "stylesheet";
-	link.type = "text/css";
-	link.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.css";
 	document.getElementsByTagName("head")[0].appendChild(style);
-	document.getElementById("stylesheet").href = "";
 	http.onreadystatechange = function(){if(this.readyState==4&&this.status==200){document.getElementById("titlebar").innerHTML=this.responseText}};
 	sendrequest(http, resources + "title.html");
 	console.log(resources);
