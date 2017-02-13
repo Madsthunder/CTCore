@@ -6,10 +6,10 @@ function initsite()
 	style.type = "text/css";
 	style.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.css";
 	head.appendChild(style);
-	var http = document.createElement("link");
-	http.rel = "import";
-	http.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html";
-	head.appendChild(http);
+	var importt = document.createElement("link");
+	importt.rel = "import";
+	importt.href = "https://madsthunder.github.io/Continuum/src/main/sites/utilities/site.html";
+	importt.appendChild(http);
 	console.log(document.getElementById("titlebar"));
 }
 function postinitsite(resources)
